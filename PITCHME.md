@@ -172,6 +172,8 @@ When consuming messages, RabbitMQ offers multiple methods to pick from. Each cho
 
 Real world use cases and some thoughts about which **publishing** and which **consumption methods** to chose.
 
+![Two Bunnies](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/face2face.jpg)
+
 +++
 ### Logging / Metrics
 
@@ -180,13 +182,16 @@ Typical fire and forget use case. Losing some of the many millions of messages w
 Slow message handling would affect the system. Choose the _fastest publishing and consumption methods_ without guarantees.
 
 +++
-### SMS-TAN / Email notifications
+### Email notifications
 
-_Publishing confirmation_ can be set to ensure the message has been routed. In case you are sending many notifications per client per day, this might be the only guarantee you opt in to. You expect the delivery to succeed in almost all cases. And you are aware that there will never be a guarantee that a recipient will really receive an email is his inbox or a text message on this phone.
+_Publishing confirmation_ can be set to ensure the message has been routed. In case you are sending many email notifications per client per day, this might be the only guarantee you opt in to. You expect the delivery to succeed in almost all cases.
 
-If you need the guarantee that your SMS or email system is processing the messages, setting a _QoS level_ and receiving an `ack` after multiple messages have been processed is a reasonable choice.
+And you are aware that there will never be a guarantee that a recipient will really receive an email is his inbox.
 
-If it's not about pure notifications, but information that has to reach the customer, _dead-letter queues_ should be used to handle failures.
++++
+### SMS-TAN
+
+If you need the guarantee that your SMS service is processing the messages, setting a _QoS level_ and receiving an `ack` after multiple messages have been processed is a reasonable choice.
 
 +++
 ### Data changes
@@ -202,7 +207,7 @@ The service informing about the data change could send messages with _publishing
 
 However you will need a strategy to create consistency eventually. A cron job that sends messages every night for each customer whose data changed in the last 24h can create consistency.
 
-As your system might have less load at night time, you could device to set a _QoS level_ and handle errors differently.
+As your system might have less load at night time, you could device to set a _QoS level_ and handle failures with _dead-letter queues_.
 
 +++
 #### Data changes
@@ -407,6 +412,8 @@ When discussing publishing, routing and consumption of messages, parameters like
 
 Together the three frames represent a full AMQP message.
 
+![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cute_flower.jpg)
+
 +++
 ### Message properties
 
@@ -452,6 +459,8 @@ Consumers clients should decode and deserialize the message body, to make it eas
 To try those examples you'll need a running RabbitMQ broker. The examples are written in Ruby and `require "bunny"`. You can always use **RabbitMQ's management UI** to check the status of your broker and queues:
 
 http://localhost:15672/ (user: guest, password: guest)
+
+![Bunny Holmes](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/dressed_as_holmes.jpg)
 
 +++
 ### Setting up a topic exchange and binding queues to it
@@ -569,53 +578,28 @@ channel.basic_cancel(consumer_tag)
 channel.close
 ```
 
-+++
-### Publishing messages with different guarantees (TODO)
-
-* publisher confirmation
-* persistence
-
-+++
-### Consuming messages with different guarantees (TODO)
-
-* ack
-* prefetch_count
-
-+++
-### Handling errors (TODO)
-
-* delivery failure
-* processing failure
-* retries
-* final failure
-
 ---
 
 ## Monitoring and Alerting
 
-TODO:
-
 * `rabbitmqctl list_queues` alert on queue length threshold
 * use API to compare current queue setup with expected configuration
+
+![Sporty Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/jumping.jpg)
 
 ---
 
 ## Cluster setup
 
-TODO:
-
 * multipled nodes with low-maintenance / automatic synchronous replication
 * high availability (HA) queues
 * federated exchanges
-* benefits
-* drawbacks
-* configuration options
+
+![Duracell](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/duracell.png)
 
 ---
 
 ## Best Practices
-
-TODO:
 
 * load JSON config file over API
 * use one connection per process
@@ -624,6 +608,7 @@ TODO:
 * reuse connections, keep connection:channel count low
 * keep queues short, if not possible use lazy queues
 
+![Lion](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/lion.jpg)
 
 ---
 
