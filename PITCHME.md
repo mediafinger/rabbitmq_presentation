@@ -45,6 +45,11 @@ It can replicate data and events to data centers in other regions to achieve hig
 * background workers are a subset of messaging systems and come included
 
 +++
+### Playing nicely with others
+![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_cat_1.jpg)
+
+
++++
 ### Alternative Protocols
 
 RabbitMQ features a full implementation of AMQP 0.9.1 as well as several custom additions over it.
@@ -96,16 +101,6 @@ When publishing messages, RabbitMQ offers multiple methods to pick from. Each ch
 * if the broker runs into issues, it will `basic.nack` messages
 
 +++
-### High availability (HA) queues
-
-* a cluster is mandatory to use HA queues
-* messages will be handled on all nodes of the cluster that handle the HA queue
-* if a node goes down, the message does still exist on the other nodes
-* this can replace slow persistence to disk in many cases
-* once a message is consumed from any node in the cluster, all copies will be removed
-* clusters can be connected in different ways, this is a topic of its own
-
-+++
 ### Persisted, slowest but most secure
 
 * set `delivery-mode=2` to persist every message before queueing it
@@ -116,6 +111,21 @@ When publishing messages, RabbitMQ offers multiple methods to pick from. Each ch
 * use _lazy queues_ when you expect extremely long queues, or suffer from unpredictable performance
 * _lazy queues_® are slower, as they remove the messages from RAM
 
++++
+### Cluster with many nodes
+
+![Rabbit Cluster](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cluster_1.jpg)
+
++++
+### High availability (HA) queues
+
+* a cluster is mandatory to use HA queues
+* messages will be handled on all nodes of the cluster that handle the HA queue
+* if a node goes down, the message does still exist on the other nodes
+* this can replace slow persistence to disk in many cases
+* once a message is consumed from any node in the cluster, all copies will be removed
+* clusters can be connected in different ways, this is a topic of its own
+
 ---
 
 ## Consuming messages
@@ -123,9 +133,9 @@ When publishing messages, RabbitMQ offers multiple methods to pick from. Each ch
 When consuming messages, RabbitMQ offers multiple methods to pick from. Each choice is a **trade-off between speed and security** that messages have really been consumed.
 
 +++
-### Trade-offs between speed and security
+### Listening to messages
 
-![Rabbit with Turtle](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_turtle.jpg)
+![Listening Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/huge_ears.jpg)
 
 +++
 ### Fastest, no guarantees
@@ -165,7 +175,9 @@ Real world use cases and some thoughts about which **publishing** and which **co
 +++
 ### Logging / Metrics
 
-Typical fire and forget use case. Losing some of the many millions of messages won't affect the system, but slow message handling would. Choose the _fastest publishing and consumption methods_ without guarantees.
+Typical fire and forget use case. Losing some of the many millions of messages won't affect the system.
+
+Slow message handling would affect the system. Choose the _fastest publishing and consumption methods_ without guarantees.
 
 +++
 ### SMS-TAN / Email notifications
@@ -183,14 +195,24 @@ A customer changes his personal data on one system and it has to inform other ap
 
 An invoicing tool that sends out emails, might be ok with eventual consistency of the real world address of the customer.
 
++++
+#### Data changes
+
 The service informing about the data change could send messages with _publishing confirmation_ and no further guarantees.
+
+However you will need a strategy to create consistency eventually. A cron job that sends messages every night for each customer whose data changed in the last 24h can create consistency.
+
+As your system might have less load at night time, you could device to set a _QoS level_ and handle errors differently.
 
 +++
 #### Data changes
 
-However you will need a strategy to create consistency eventually. Maybe a job that sends messages every night for each customer whose data changed in the last 24h. As you might have less system load at night, using a _QoS level_ might give you the guarantees you need.
+Nevertheless the same invoicing tool might expect to always be immediately informed about changes in the payment data or email address. In this case you would need to pick more secure messaging strategies like a _HA queue_ and _manual `ack`_ after message delivery.
 
-Nevertheless the same tool might expect to always be immediately informed about changes in the payment data or email address. In this case you would need to pick more secure messaging strategies like a _HA queue_ and _manual `ack`_ after message delivery.
++++
+### Keep your gold safe
+
+![Golden bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/gold.jpg)
 
 +++
 ### Money transfers
@@ -198,11 +220,6 @@ Nevertheless the same tool might expect to always be immediately informed about 
 When a redundant cluster is available, using _HA queues_ with _delivery confirmation_ and _dead-letter exchanges_ is a secure choice.
 
 As money transfers need all possible guarantees, you will want to add _persistence of messages to disk_ into the mix. This ensures all messages can be recovered even in the case of catastrophic failure.
-
-+++
-### Keep your gold safe
-
-![Golden bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/gold.jpg)
 
 ---
 
@@ -223,6 +240,10 @@ As money transfers need all possible guarantees, you will want to add _persisten
 * queues can be declared to be `exclusive` and will be deleted when the connection closes
 * to enhance performance, multiple **consumers** can subscribe to a queue, messages are then distributed in a _round robin_ way, so that each consumer will process a part of all messages, which helps to keep queues short
 
++++
+### The broker distributes messages from exchanges to queues
+
+![Typical message broker](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/football.jpg)
 
 +++
 ### Direct exchanges
@@ -254,6 +275,12 @@ As money transfers need all possible guarantees, you will want to add _persisten
 * emulate _direct exchange_ queues by binding to the exact `routing.key`
 * emulate _fanout exchange_ queues by binding to any routing.key through `#`
 * _topic exchanges_ are very flexible and a good future-proof choice
+
+
++++
+### WAT? Even more?
+
+![Enough!](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/lionhead.jpg)
 
 +++
 ### Headers exchanges
