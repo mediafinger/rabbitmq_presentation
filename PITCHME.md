@@ -2,18 +2,21 @@
 
 An introduction to create a mutual understanding about **publishing**, **routing** and **consuming** messages with RabbitMQ and the Advanced Message Queueing Protocol (AMQP).
 
-AMQP was defined and implemented for the first time over ten years ago. Since then it expanded beyond the finance and banking sector it originated in, into many different industries.
-
 RabbitMQ is a high performance **message broker** based on AMQP. Using the broker architecture it can be scaled independently. Applications use it over lightweight client libraries.
+
++++
+### Thank you for coming
+
+![Happy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/happy_1024x640.jpg)
 
 +++
 ### Decoupling services
 
-In our current service oriented architecture, the system triggering an event (or receiving it from an external service), would manage large parts of the logic needed to react to this event. It would make calls to different services and endpoints to create or update records. To do this in a resilient way, we setup background workers in each application that handle asynchronous processing and retries.
+In any (micro-) service oriented architecture the systems trigger events or receive them from external services. Other (internal) services should react to these events by changing the database, calling more services or by just responding with a calculation.
 
-Using a message bus you would usually inform other systems about events and those implement the logic if and how to react.
+To do this in a resilient way, we need background workers that handle asynchronous processing and retries (unless we us a language like Erlang).
 
-Decoupling services by introducing an asynchronous messaging system between them, allows to change and scale systems independently.
+An asynchronous messaging system allows to change and scale systems independently.
 
 +++
 ### Handling high volumes of messages
@@ -46,7 +49,7 @@ It can replicate data and events to data centers in other regions to achieve hig
 
 RabbitMQ features a full implementation of AMQP 0.9.1 as well as several custom additions over it.
 
-While this how-to focuses on RabbitMQ's AMQP implementation only, RabbitMQ also features implementations of a few other messaging protocols that can be used for special use cases.
+While this introduction focuses on RabbitMQ's AMQP implementation only, RabbitMQ also features implementations of a few other messaging protocols that can be used for special use cases.
 
 * MQTT a lightweight protocol often used to implement pub-sub patterns with high latency mobile devices
 * STOMP a text-based protocol creates compatibility with ApacheMQ
@@ -58,13 +61,21 @@ While this how-to focuses on RabbitMQ's AMQP implementation only, RabbitMQ also 
 
 ![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
 
++++
+### Ack the complexity
+
+![Fancy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/dressed.jpg)
+
 ---
 
 ## Publishing messages
 
 When publishing messages, RabbitMQ offers multiple methods to pick from. Each choice is a **trade-off between speed and security** that messages have really been delivered. All options can be combined to find the sweet spot for the type of messages being send on a specific queue.
 
-This list skips the Transaction pattern RabbitMQ implements (AMQP TX), as the alternatives offer more lightweight and less complex methods to achieve the same goals.
++++
+### Trade-offs between speed and security
+
+![Rabbit with Turtle](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_turtle.jpg)
 
 +++
 ### Fastest, no guarantees
@@ -111,9 +122,10 @@ This list skips the Transaction pattern RabbitMQ implements (AMQP TX), as the al
 
 When consuming messages, RabbitMQ offers multiple methods to pick from. Each choice is a **trade-off between speed and security** that messages have really been consumed.
 
-This list skips the Transaction pattern RabbitMQ implements (AMQP TX), as the alternatives offer more lightweight and less complex methods to achieve the same goals.
++++
+### Trade-offs between speed and security
 
-It also skips the `get` pattern, as the performance is worse compared to `consuming` messages. At the same time it does not offer benefits over the available alternatives.
+![Rabbit with Turtle](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_turtle.jpg)
 
 +++
 ### Fastest, no guarantees
@@ -141,6 +153,9 @@ It also skips the `get` pattern, as the performance is worse compared to `consum
 * send a `basic.nack` or `basic.reject` to reject and delete a message
 * reject a message with `requeue=true` to redeliver it
 
++++
+### Are you still with me?
+![Yawning](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/yawning.jpg)
 ---
 
 ## Examples
@@ -183,6 +198,11 @@ Nevertheless the same tool might expect to always be immediately informed about 
 When a redundant cluster is available, using _HA queues_ with _delivery confirmation_ and _dead-letter exchanges_ is a secure choice.
 
 As money transfers need all possible guarantees, you will want to add _persistence of messages to disk_ into the mix. This ensures all messages can be recovered even in the case of catastrophic failure.
+
++++
+### Keep your gold safe
+
+![Golden bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/gold.jpg)
 
 ---
 
@@ -254,10 +274,7 @@ RabbitMQ provides other types of exchanges through plugins to enable special use
 +++
 ### Handling failure
 
-TODO:
-
-* retries and final failure
-* dead-letter boxes and poisonous messages https://derickbailey.com/2016/03/28/dealing-with-dead-letters-and-poison-messages-in-rabbitmq/
+![Waffle head](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/waffle.jpg)
 
 +++
 #### Alternate exchanges
@@ -281,6 +298,7 @@ When a queued message expires or is rejected by the consumer.
 * having only messages of one type in the queue makes error handling easier
 * the message headers will be changed
 * could be combined with a delayed retry strategy: https://github.com/rabbitmq/rabbitmq-delayed-message-exchange
+* dead-letter boxes and poisonous messages https://derickbailey.com/2016/03/28/dealing-with-dead-letters-and-poison-messages-in-rabbitmq/
 
 ---
 
@@ -407,13 +425,6 @@ Consumers clients should decode and deserialize the message body, to make it eas
 To try those examples you'll need a running RabbitMQ broker. The examples are written in Ruby and `require "bunny"`. You can always use **RabbitMQ's management UI** to check the status of your broker and queues:
 
 http://localhost:15672/ (user: guest, password: guest)
-
-Instead of using bunny directly, you could chose to implement a **framework** like:
-
-* hutch: https://github.com/gocardless/hutch
-* sneakers: https://github.com/jondot/sneakers/wiki
-
-But those are not covered in here.
 
 +++
 ### Setting up a topic exchange and binding queues to it
@@ -600,7 +611,17 @@ A list of the most popular clients for a few popular languages:
 
 The **bunny** gem
 
-https://github.com/ruby-amqp/bunny
+* https://github.com/ruby-amqp/bunny
+
+Instead of using bunny directly, you could implement a **framework** like:
+
+* hutch: https://github.com/gocardless/hutch
+* sneakers: https://github.com/jondot/sneakers/wiki
+
+
++++
+
+![Ruby](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/ruby_400x400.png)
 
 +++
 ### Elixir
@@ -649,78 +670,22 @@ https://github.com/Antti/rust-amqp
 
 * **RabbitMQ in Depth** by Gavin M. Roy: https://www.manning.com/books/rabbitmq-in-depth (this book inspired me to summarize the information above - it's a great read, buy it yourself!)
 
-
 ---
 
-## Bunnies
+## Thanks for your time
 
-![Happy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/happy_1024x640.jpg)
-+++
-![Rabbit Cluster](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cluster_1.jpg)
-+++
-![Rabbit Cluster](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cluster_2.jpg)
-+++
-![Rabbit Cluster](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cluster_3.jpg)
-+++
-![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cute_flower.jpg)
-+++
-![Bunny Holmes](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/dressed_as_holmes.jpg)
-+++
-![Fancy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/dressed.jpg)
-+++
-![Duracell](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/duracell.png)
-+++
-![Football Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/football.jpg)
-+++
-![Gold Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/gold.jpg)
-+++
 ![Thank you!](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/high_five.jpg)
-+++
-![Listening Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/huge_ears.jpg)
-+++
-![Wrapped Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/in_hat.jpg)
-+++
-![Sporty Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/jumping.jpg)
-+++
-![Lion](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/lion.jpg)
-+++
-![Lionhead](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/lionhead.jpg)
-+++
-![European Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/solo_european_rabbit.webp)
-+++
-![Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/solo.jpg)
-+++
-![Teddy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/teddy.jpg)
-+++
-![Tongue out](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/tongue_out.jpg)
-+++
-![Waffle head](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/waffle.jpg)
-+++
-![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_cat_1.jpg)
-+++
-![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_cat_2.jpg)
-+++
-![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_cat_3.jpg)
-+++
-![Rabbit with Turtle](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_turtle.jpg)
-+++
-![Yawning](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/yawning.jpg)
 
 +++
-![RabbitMQ](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/rabbitmq.svg)
-+++
-![Ruby](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/ruby_400x400.png)
 
----
+### Thank you
 
-## Thanks for reading!
+Assembled by [**Andreas Finger**](http://mediafinger.com) in February and March 2018 in Barcelona
 
-Assembled by **Andreas Finger** in February 2018 in Barcelona
+[@mediafinger on Github](https://github.com/mediafinger)
 
-[@mediafinger](http://mediafinger.com)
+[@mediafinger on Twitter](https://twitter.com/mediafinger)
 
-on [Github](https://github.com/mediafinger)
+This presentation: https://gitpitch.com/mediafinger/rabbitmq_presentation#/
 
-and [Twitter](https://twitter.com/mediafinger)
-
-This presentation: https://github.com/mediafinger/rabbitmq_info
+A longer markdown (without bunnies): https://github.com/mediafinger/rabbitmq_presentation/blob/master/README.markdown
