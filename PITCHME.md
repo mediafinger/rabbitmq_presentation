@@ -21,7 +21,7 @@ An asynchronous messaging system allows to change and scale systems independentl
 +++
 ### Handling high volumes of messages
 
-The message broker distributes messages and can in this process throttle the load towards the message receiving systems.
+The message broker routes messages and can in this process throttle the load towards the message receiving systems.
 
 This can reduce failure rate in peak times and at the same time speed up the systems sending messages, as they are no longer blocked by waiting for an answer of a potentially slow system. This can go as far as decoupling your database writes.
 
@@ -46,8 +46,8 @@ It can replicate data and events to data centers in other regions to achieve hig
 
 +++
 ### Playing nicely with others
-![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_cat_1.jpg)
 
+![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_cat_1.jpg)
 
 +++
 ### Alternative Protocols
@@ -246,7 +246,7 @@ As money transfers need all possible guarantees, you will want to add _persisten
 * to enhance performance, multiple **consumers** can subscribe to a queue, messages are then distributed in a _round robin_ way, so that each consumer will process a part of all messages, which helps to keep queues short
 
 +++
-### The broker distributes messages from exchanges to queues
+### The broker routes messages from exchanges to queues
 
 ![Typical message broker](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/football.jpg)
 
@@ -412,6 +412,9 @@ When discussing publishing, routing and consumption of messages, parameters like
 
 Together the three frames represent a full AMQP message.
 
++++
+### Message properties
+
 ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cute_flower.jpg)
 
 +++
@@ -521,6 +524,11 @@ end
 ```
 
 +++
+### Let's jump to the consumer
+
+![Sporty Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/jumping.jpg)
+
++++
 #### Open connection and create channel for consumer
 
 ```ruby
@@ -585,13 +593,13 @@ channel.close
 * `rabbitmqctl list_queues` alert on queue length threshold
 * use API to compare current queue setup with expected configuration
 
-![Sporty Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/jumping.jpg)
+![Tongue out](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/tongue_out.jpg)
 
 ---
 
 ## Cluster setup
 
-* multipled nodes with low-maintenance / automatic synchronous replication
+* multiple nodes with low-maintenance / automatic synchronous replication
 * high availability (HA) queues
 * federated exchanges
 
@@ -608,6 +616,9 @@ channel.close
 * reuse connections, keep connection:channel count low
 * keep queues short, if not possible use lazy queues
 
++++
+### Getting the basics right, allows you to relax
+
 ![Lion](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/lion.jpg)
 
 ---
@@ -621,6 +632,11 @@ A list of the most popular clients for a few popular languages:
 +++
 ### Ruby
 
+![Ruby](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/ruby_400x400.png)
+
++++
+### Ruby
+
 The **bunny** gem
 
 * https://github.com/ruby-amqp/bunny
@@ -629,11 +645,6 @@ Instead of using bunny directly, you could implement a **framework** like:
 
 * hutch: https://github.com/gocardless/hutch
 * sneakers: https://github.com/jondot/sneakers/wiki
-
-
-+++
-
-![Ruby](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/ruby_400x400.png)
 
 +++
 ### Elixir
