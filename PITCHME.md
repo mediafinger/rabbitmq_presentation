@@ -649,6 +649,68 @@ https://github.com/Antti/rust-amqp
 
 * **RabbitMQ in Depth** by Gavin M. Roy: https://www.manning.com/books/rabbitmq-in-depth (this book inspired me to summarize the information above - it's a great read, buy it yourself!)
 
+
+---
+
+## Bunnies
+
+![Happy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/happy_1024x640.jpg)
++++
+![Rabbit Cluster](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cluster_1.jpg)
++++
+![Rabbit Cluster](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cluster_2.jpg)
++++
+![Rabbit Cluster](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cluster_3.jpg)
++++
+![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cute_flower.jpg)
++++
+![Bunny Holmes](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/dressed_as_holmes.jpg)
++++
+![Fancy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/dressed.jpg)
++++
+![Duracell](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/duracell.png)
++++
+![Football Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/football.jpg)
++++
+![Gold Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/gold.jpg)
++++
+![Thank you!](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/high_five.jpg)
++++
+![Listening Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/huge_ears.jpg)
++++
+![Wrapped Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/in_hat.jpg)
++++
+![Sporty Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/jumping.jpg)
++++
+![Lion](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/lion.jpg)
++++
+![Lionhead](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/lionhead.jpg)
++++
+![European Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/solo_european_rabbit.webp)
++++
+![Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/solo.jpg)
++++
+![Teddy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/teddy.jpg)
++++
+![Tongue out](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/tongue_out.jpg)
++++
+![Waffle head](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/waffle.jpg)
++++
+![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_cat_1.jpg)
++++
+![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_cat_2.jpg)
++++
+![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_cat_3.jpg)
++++
+![Rabbit with Turtle](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_turtle.jpg)
++++
+![Yawning](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/yawning.jpg)
+
++++
+![RabbitMQ](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/rabbitmq.svg)
++++
+![Ruby](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/ruby_400x400.png)
+
 ---
 
 ## Thanks for reading!
