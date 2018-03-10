@@ -23,7 +23,10 @@
 .reveal section img {
   border: none;
   margin: 15px 15px;
+  max-width: 830px;
+  max-height: 530px;
   padding: 20px;
+  text-align: center;
 }
 
 .reveal th {
