@@ -1,0 +1,53 @@
+# frozen_string_literal: true
+
+require "awesome_print"
+require "rake"
+require "rspec/core"
+require "rspec/core/rake_task"
+require "rubocop"
+
+require_relative "config.rb" unless defined? Config
+require File.join(Config.root, "app")
+
+task :console do
+  puts "Console with the app and awesome_print loaded:"
+  ARGV.clear
+  require "irb"
+  require "ap"
+  require_relative "app.rb"
+  IRB.start
+end
+
+task :routes do
+  actions = %w[GET POST PUT PATCH DELETE]
+  routes = actions.each_with_object({}) do |action, hash|
+    hash[action] = App.routes[action]&.each_with_object([]) { |route, arr| arr << route[0].to_s }
+  end
+  ap routes.compact
+end
+
+# define task :rspec
+RSpec::Core::RakeTask.new(:rspec)
+
+desc "Run rubocop with autocorrect"
+task :rubocop do
+  puts "Obey the autocorrection cop!"
+  sh "rubocop  -a -c .rubocop.yml"
+end
+
+namespace :rubocop do
+  desc "Run rubocop without autocorrect"
+  task :not_correcting do
+    sh "rubocop -c .rubocop.yml"
+  end
+end
+
+desc "Run rubocop and the specs"
+task test: ["rubocop:not_correcting", "rspec"]
+
+desc "Run the app, start sinatra server"
+task :start do
+  sh " puma -t 0:8 -p 4568 --tag CONSUMER -C puma.rb"
+end
+
+task default: :test

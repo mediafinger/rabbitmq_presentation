@@ -1,0 +1,2 @@
+web: bundle exec puma -t 0:6 -p ${PORT:-4568} -e ${RACK_ENV:-development}
+web: bundle exec ruby app.rb -p ${PORT:-4568}

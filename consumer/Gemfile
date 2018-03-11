@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem "sinatra"
+
+gem "bunny", "~> 2.9"
+gem "haml",  "~> 5.0"
+gem "puma",  "~> 3.7"
+gem "rake",  "~> 12.3"
+
+group :development, :test do
+  gem "awesome_print", "~> 1.8"
+  gem "json_spec",     "~> 1.1"
+  gem "rspec",         "~> 3.7"
+  gem "rubocop",       "0.52.1", require: false
+  gem "rubocop-rspec", "~> 1.22"
+  gem "turbolinks"
+  # gem "rack-test"
+  # gem "webmock"
+end
