@@ -447,15 +447,14 @@ channel = connection.create_channel
 #### Create consumer for queue
 
 ```ruby
-queue = declare_queue("handle_it")
-
-consumer_tag = "consumer-007"
+queue = channel.queue("handle_it")
+queue.bind(channel.exchange("first_topic_exchange", type: :topic), routing_key: "example.*.key")
 
 consumer = Bunny::Consumer.new(
   channel,
   queue,
-  consumer_tag,
-  true,  # no_ack == no automatic ack == manual ack
+  channel.generate_consumer_tag,
+  false, # no_ack == no automatic ack == manual ack
   false, # exclusive
   {}     # arguments
 )
