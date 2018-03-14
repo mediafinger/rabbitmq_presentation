@@ -354,29 +354,27 @@ The **binding keys** implement pattern matching by including asterisk `*` or pou
 +++
 ### Routing keys schema
 
-Let's assume our routing keys have usually three parts:  
-an _application_, an _entity_ and an _event_:
+Let's assume we have a service that connects tech communities all over the world. Our routing keys have usually three parts: a _city_, a _topic_ and a _category_:
 
-| Applications    | Entities | Events     |
-|:----------------|:---------|:-----------|
-| registrations   | business | created    |
-| identifications | person   | successful |
-| banking         | account  | failed     |
-| notifications   | transfer | updated    |
-| admin           |          | deleted    |
-| webui           |          | error      |
+| City      | Topic   | Category |
+|:----------|:--------|:---------|
+| barcelona | android | event    |
+| berlin    | elixir  | job      |
+| london    | ruby    | news     |
+| madrid    | testing | question |
+| vancouver | wwcode  | tutorial |
+
 
 +++
 ### Routing keys examples
 
 The above list would allow for `routing.keys` like the following:
 
-* `registrations.business.created`
-* `registrations.person.updated`
-* `banking.account.created`
-* `banking.transfer.error`
-* `notifications.person.updated`
-* `admin.person.deleted`
+* `barcelona.ruby.event`
+* `barcelona.ruby.job`
+* `barcelona.testing.job`
+* `berlin.testing.job`
+* `vancouver.wwcode.event`
 
 +++
 ### Binding queues to the topic exchange
@@ -385,19 +383,18 @@ Queues are bound to the exchange by a _binding key_ which is a pattern or the ex
 
 Messages can be delivered to multiple queues that can have one or more consumers each.
 
-In this example the consumers _Audits_ and _Notifications_ consume multiple queues.
-
 +++
 ### Binding examples
 
-| Binding key                    | Explanation                                 | Consumers                  |
-|:-------------------------------|:--------------------------------------------|:---------------------------|
-| `registrations.#`              | every message of the `registrations` app    | Customer care              |
-| `identifications.*.successful` | matches all entities with this event        | Download ID, Notifications |
-| `banking.account.created`      | matches the exact `routing.key`             | Audits, Notifications      |
-| `banking.transfer.*`           | `banking.transfer` of any event type        | Audits, Banking-API        |
-| `#.error`                      | all `error` events of all apps and entities | Alerts                     |
-| `#`                            | all messages                                | Logs                       |
+| Binding key            | Explanation                                |
+|:-----------------------|:-------------------------------------------|
+| `barcelona.#`          | every message for Barcelona                |
+| `barcelona.*.event`    | matches all events in Barcelona            |
+| `barcelona.ruby.*`     | matches everything about Ruby in Barcelona |
+| `barcelona.ruby.event` | matches the exact `routing.key`            |
+| `*.ruby.*`             | matches everything about Ruby everywhere   |
+| `#.job`                | matches all messages about Jobs            |
+| `#`                    | all messages                               |
 
 +++
 ### Message flow diagram
