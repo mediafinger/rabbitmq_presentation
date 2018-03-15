@@ -90,7 +90,7 @@ DEPENDENCIES
   rspec (~> 3.7)
   rubocop (= 0.52.1)
   rubocop-rspec (~> 1.22)
-  sinatra
+  sinatra (~> 2.0.1)
 
 BUNDLED WITH
    1.16.1
