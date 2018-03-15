@@ -1,0 +1,70 @@
+# frozen_string_literal: true
+
+require "awesome_print"
+require "rspec/core"
+require "rspec/core/rake_task"
+require "rubocop"
+
+# require_relative "config.rb" unless defined? Config
+# require File.join(Config.root, "app")
+
+task :environment do
+  ENV["RACK_ENV"] ||= "development"
+end
+
+desc "Opens the console with the app loaded, can be used to publish messages"
+task console: :environment do
+  puts "Console with the app and awesome_print loaded:"
+  ARGV.clear
+  require "irb"
+  require "ap"
+  require_relative "app.rb"
+  IRB.start
+end
+task publisher: :console
+
+desc "Starts the hutch process to create and consume the queues"
+task hutch: :environment do
+  sh "bundle exec hutch --require hutch_consumer_config.rb"
+end
+task consumer: :hutch
+
+desc "Prints the routes of the app in a human readable form"
+task routes: :environment do
+  actions = %w(GET POST PUT PATCH DELETE)
+  routes = actions.each_with_object({}) do |action, hash|
+    hash[action] = App.routes[action]&.each_with_object([]) { |route, arr| arr << route[0].to_s }
+  end
+  ap routes.compact
+end
+
+# define task :rspec
+RSpec::Core::RakeTask.new(:rspec)
+
+desc "Run rubocop with autocorrect"
+task rubocop: :environment do
+  puts "Obey the autocorrection cop!"
+  sh "rubocop  -a -c .rubocop.yml"
+end
+
+namespace :rubocop do
+  desc "Run rubocop without autocorrect"
+  task not_correcting: :environment do
+    sh "rubocop -c .rubocop.yml"
+  end
+end
+
+desc "Run rubocop and the specs"
+task :test do
+  ENV["RACK_ENV"] = "test"
+  Rake::Task["rubocop:not_correcting"].invoke
+  Rake::Task["rspec"].invoke
+end
+
+desc "Run the web app (the publisher), start sinatra server"
+task start: :environment do
+  sh " puma -t 0:8 -p 4500 --tag CONSUMER -C puma.rb"
+end
+task sinatra: :start
+
+task default: :test

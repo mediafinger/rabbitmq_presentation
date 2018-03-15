@@ -46,10 +46,34 @@ Check _hutch_shared_config.rb_ which has to be the same for all publishers and a
 
 ## Rake Tasks
 
-    rake console
-
-Opens IRB with `awesome_print` and the application loaded.
-
     rake hutch
 
-Runs `hutch --require hutch_consumer_config.rb`. Without this there won't be any queues defined! Consumers only start consuming after hutch is started.
+Runs `hutch --require hutch_consumer_config.rb`. Without this there won't be any queues defined! Consumers only start consuming after hutch is started **(the consumer)**. Start this first and then either `rake console` or `rake start`. Alias: `rake consumer`
+
+    rake console
+
+Opens IRB with `awesome_print` and the application loaded **(the publisher)**. Alias: `rake publisher`
+
+    rake routes
+
+Prints the routes in human readable form.
+
+    rake rspec
+
+Executes the specs.
+
+    rake rubocop
+
+Runs `rubocop --auo-correct`.
+
+    rake rubocop:not_correcting
+
+Runs `rubocop` without autocorrect
+
+    rake start
+
+Starts puma and loads the sinatra app **(the publisher)**. Alias: `rake sinatra`
+
+    rake test
+
+Runs `rake rubocop:not_correcting` and `rake rspec`. This is the default task.

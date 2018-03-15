@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The config has to be the same for Publisher and Consumer
 #
 # Services that want to communicate with each other, all have to use the same config!
@@ -10,19 +12,19 @@
 # enable_http_api_use true
 
 # Set name of exchange, default is 'hutch'
-Hutch::Config.set(:mq_exchange, "solaris")
+Hutch::Config.set(:mq_exchange, "topix")
 
 # Activate Publisher Confirms, default is false
 Hutch::Config.set(:publisher_confirms, true)
 # Do not use the alternative: force_publisher_confirms which forces Hutch::Broker#wait_for_confirms
 # for every publish (blocking the thread). While it is the safest option it also offers the lowest throughput
 
-# When a message can not be routed on the default exchange "solaris"
+# When a message can not be routed on the default exchange "topix"
 # the publisher_confirms feature will nack / reject it
 # instead of sending it back to the publisher, we re-route it
 # to an alternate-exchange
 # TODO: add this to hutch's README
-Hutch::Config.set(:mq_exchange_options, arguments: { "alternate-exchange": "#{Hutch::Config.mq_exchange}_ae"})
+Hutch::Config.set(:mq_exchange_options, arguments: { "alternate-exchange": "#{Hutch::Config.mq_exchange}_ae" })
 
 # Set a QoS level / prefetch_count for the whole channel, default is 0 == all in the queue
 # 1 is the safest and slowest setting
@@ -49,7 +51,6 @@ Hutch::Config.set(:error_handlers, [Hutch::ErrorHandlers::Logger.new])
 # * reject/nack == send to dead_letter_queue when message older than x hours
 # * log to Sentry
 # Hutch::Config.set(:error_acknowledgements, [])
-
 
 #
 # helper methods, used by consumer and publisher for our failure setup

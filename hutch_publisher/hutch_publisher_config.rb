@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Require this file when starting the service that will publish messages
 
 require "awesome_print"
@@ -5,7 +7,7 @@ require "hutch"
 
 load "./hutch_shared_config.rb"
 
-Hutch.connect
+Hutch.connect unless ENV["RACK_ENV"] == "test"
 
 # print config variables for development
 ap Hutch::Config
@@ -30,7 +32,7 @@ bind_queue(name: "ae__all__unroutable", exchange: ae, routing_key: "#")
 # publish(routing_key: "hutch.demo.event", message: "A man, a plan, a canal panama!")
 
 #
-# helper method, calling Hutch.publish with some solaris default values
+# helper method, calling Hutch.publish with some default values
 #
 def publish(routing_key:, message:, properties: {}, options: {})
   raise("message has to be a hash") unless message.is_a?(Hash)
