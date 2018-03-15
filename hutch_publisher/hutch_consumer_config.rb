@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Require this file when starting the Hutch consumer process with
 # bundle exec hutch --require hutch_consumer_config.rb
 
@@ -13,11 +15,9 @@ load "./hutch_shared_config.rb"
 # * this will bind the queues to the given binding_keys
 # * the consumers will start consuming
 #
-require_relative "lib/demo_consumer.rb"
-require_relative "lib/event_consumer.rb"
-require_relative "lib/general_consumer.rb"
+Dir[File.join(".", "lib", "**", "*.rb")].sort.each { |file| require file }
 
-Hutch.connect
+Hutch.connect unless ENV["RACK_ENV"] == "test"
 
 # print config variables for development
 ap Hutch::Config

@@ -1,0 +1,18 @@
+.publish
+  %p
+    Send a message!
+
+  %form(action="/publish" method="post")
+    .field
+      .label Message:
+      %input(type="text" name="message")
+    .field
+      %input(type="submit")
+
+- if defined? success
+  .success
+    = success
+
+- if defined? failure
+  .failure
+    = failure
