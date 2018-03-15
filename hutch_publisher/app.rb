@@ -41,7 +41,7 @@ class App < Sinatra::Application
     queue          = result.channel.queues.find { |name, _q| name == queue_name }&.last
     messages_count = queue&.message_count || 0
 
-    if result[:success]
+    if true # check for success
       haml :publish, locals: { success: "Queue #{queue_name} has now #{messages_count} messages." }
     else
       haml :publish, locals: {

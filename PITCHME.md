@@ -354,7 +354,8 @@ The **binding keys** implement pattern matching by including asterisk `*` or pou
 +++
 ### Routing keys schema
 
-Let's assume we have a service that connects tech communities all over the world. Our routing keys have usually three parts: a _city_, a _topic_ and a _category_:
+Let's assume we have a service that connects tech communities all over the world. Our routing keys have usually three parts:  
+a _city_, a _topic_ and a _category_:
 
 | City      | Topic   | Category |
 |:----------|:--------|:---------|
