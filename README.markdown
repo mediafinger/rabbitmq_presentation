@@ -535,7 +535,6 @@ TODO:
 * reuse connections, keep connection:channel count low
 * keep queues short, if not possible use lazy queues
 
-
 ---
 
 ## Clients
@@ -548,7 +547,14 @@ A list of the most popular clients for a few popular languages:
 
 The **bunny** gem
 
-https://github.com/ruby-amqp/bunny
+* https://github.com/ruby-amqp/bunny
+
+Instead of using bunny directly, you could implement a **framework** like:
+
+* hutch: https://github.com/gocardless/hutch
+* sneakers: https://github.com/jondot/sneakers/wiki
+
+_Example code:_ https://github.com/mediafinger/rabbitmq_presentation/tree/master/hutch_consumer
 
 ### Elixir
 
@@ -596,12 +602,10 @@ https://github.com/Antti/rust-amqp
 
 ## Thanks for reading!
 
-Assembled by **Andreas Finger** in February 2018 in Barcelona
+Assembled by [**Andreas Finger**](http://mediafinger.com) in February 2018 in Barcelona
 
-[@mediafinger](http://mediafinger.com)
+[@mediafinger on Github](https://github.com/mediafinger)
 
-on [Github](https://github.com/mediafinger)
+[@mediafinger on Twitter](https://twitter.com/mediafinger)
 
-and [Twitter](https://twitter.com/mediafinger)
-
-This presentation: https://github.com/mediafinger/rabbitmq_info
+This presentation and code examples: https://github.com/mediafinger/rabbitmq_presentation
