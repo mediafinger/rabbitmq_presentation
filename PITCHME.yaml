@@ -11,7 +11,7 @@
 #
 footnote : "assembled by Andreas Finger in February 2018 in Barcelona :: @mediafinger on Github and Twitter"
 highlight : solarized-light
-logo : "assets/rabbitmq.svg"
+logo : "https://github.com/mediafinger/rabbitmq_presentation/blob/perl_and_friends/assets/rabbitmq.svg"
 published : false
 theme : beige
 theme-override : custom.css
