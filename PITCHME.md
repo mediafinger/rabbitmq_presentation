@@ -7,7 +7,7 @@ RabbitMQ is a high performance **message broker** based on AMQP. Using the broke
 +++
 ### Thank you for coming
 
-![Happy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/happy_1024x640.jpg)
+![Happy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/happy_1024x640.jpg)
 
 +++
 ### Decoupling services
@@ -47,7 +47,7 @@ It can replicate data and events to data centers in other regions to achieve hig
 +++
 ### Playing nicely with others
 
-![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_cat_1.jpg)
+![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/with_cat_1.jpg)
 
 +++
 ### Alternative Protocols
@@ -69,7 +69,7 @@ While this introduction focuses on RabbitMQ's AMQP implementation only, RabbitMQ
 +++
 ### Ack the complexity
 
-![Fancy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/dressed.jpg)
+![Fancy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/dressed.jpg)
 
 ---
 
@@ -80,7 +80,7 @@ When publishing messages, RabbitMQ offers multiple methods to pick from. Each ch
 +++
 ### Trade-offs between speed and security
 
-![Rabbit with Turtle](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/with_turtle.jpg)
+![Rabbit with Turtle](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/with_turtle.jpg)
 
 +++
 ### Fastest, no guarantees
@@ -114,7 +114,7 @@ When publishing messages, RabbitMQ offers multiple methods to pick from. Each ch
 +++
 ### Cluster with many nodes
 
-![Rabbit Cluster](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cluster_1.jpg)
+![Rabbit Cluster](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/cluster_1.jpg)
 
 +++
 ### High availability (HA) queues
@@ -135,7 +135,7 @@ When consuming messages, RabbitMQ offers multiple methods to pick from. Each cho
 +++
 ### Listening to messages
 
-![Listening Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/huge_ears.jpg)
+![Listening Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/huge_ears.jpg)
 
 +++
 ### Fastest, no guarantees
@@ -165,14 +165,14 @@ When consuming messages, RabbitMQ offers multiple methods to pick from. Each cho
 
 +++
 ### Are you still with me?
-![Yawning](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/yawning.jpg)
+![Yawning](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/yawning.jpg)
 ---
 
 ## Examples
 
 Real world use cases and some thoughts about which **publishing** and which **consumption methods** to chose.
 
-![Two Bunnies](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/face2face.jpg)
+![Two Bunnies](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/face2face.jpg)
 
 +++
 ### Logging / Metrics
@@ -217,7 +217,7 @@ Nevertheless the same invoicing tool might expect to always be immediately infor
 +++
 ### Keep your gold safe
 
-![Golden bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/gold.jpg)
+![Golden bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/gold.jpg)
 
 +++
 ### Money transfers
@@ -248,7 +248,7 @@ As money transfers need all possible guarantees, you will want to add _persisten
 +++
 ### The broker routes messages from exchanges to queues
 
-![Typical message broker](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/football.jpg)
+![Typical message broker](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/football.jpg)
 
 +++
 ### Direct exchanges
@@ -285,7 +285,7 @@ As money transfers need all possible guarantees, you will want to add _persisten
 +++
 ### WAT? Even more?
 
-![Enough!](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/lionhead.jpg)
+![Enough!](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/lionhead.jpg)
 
 +++
 ### Headers exchanges
@@ -306,7 +306,7 @@ RabbitMQ provides other types of exchanges through plugins to enable special use
 +++
 ### Handling failure
 
-![Waffle head](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/waffle.jpg)
+![Waffle head](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/waffle.jpg)
 
 +++
 #### Alternate exchanges
@@ -413,7 +413,7 @@ Together the three frames represent a full AMQP message.
 +++
 ### Message properties
 
-![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cute_flower.jpg)
+![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/cute_flower.jpg)
 
 +++
 ### Message properties
@@ -461,7 +461,7 @@ To try those examples you'll need a running RabbitMQ broker. The examples are wr
 
 http://localhost:15672/ (user: guest, password: guest)
 
-![Bunny Holmes](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/dressed_as_holmes.jpg)
+![Bunny Holmes](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/dressed_as_holmes.jpg)
 
 +++
 ### Setting up a topic exchange and binding queues to it
@@ -524,7 +524,7 @@ end
 +++
 ### Let's jump to the consumer
 
-![Sporty Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/jumping.jpg)
+![Sporty Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/jumping.jpg)
 
 +++
 #### Open connection and create channel for consumer
@@ -590,7 +590,7 @@ channel.close
 * `rabbitmqctl list_queues` alert on queue length threshold
 * use API to compare current queue setup with expected configuration
 
-![Tongue out](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/tongue_out.jpg)
+![Tongue out](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/tongue_out.jpg)
 
 ---
 
@@ -600,7 +600,7 @@ channel.close
 * high availability (HA) queues
 * federated exchanges
 
-![Duracell](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/duracell.png)
+![Duracell](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/duracell.png)
 
 ---
 
@@ -616,7 +616,7 @@ channel.close
 +++
 ### Getting the basics right, allows you to relax
 
-![Lion](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/lion.jpg)
+![Lion](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/lion.jpg)
 
 ---
 
@@ -629,7 +629,7 @@ A list of the most popular clients for a few popular languages:
 +++
 ### Ruby
 
-![Ruby](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/ruby_400x400.png)
+![Ruby](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/ruby_400x400.png)
 
 +++
 ### Ruby
@@ -694,7 +694,7 @@ https://github.com/Antti/rust-amqp
 
 ## Thanks for your time
 
-![Thank you!](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/high_five.jpg)
+![Thank you!](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/high_five.jpg)
 
 +++
 
