@@ -1,0 +1,19 @@
+#
+# GitPitch Slideshow Custom Settings
+#
+# For details, visit Wiki:
+# https://github.com/gitpitch/gitpitch/wiki/Slideshow-Settings
+#
+# highlight : hybrid
+# highlight : monokai
+# theme-override : assets/css/PITCHME.codemax.css
+# theme-override : assets/css/PITCHME.css
+#
+footnote : "assembled by Andreas Finger in February 2018 in Barcelona :: @mediafinger on Github and Twitter"
+highlight : solarized-light
+logo : "assets/rabbitmq.svg"
+published : false
+theme : beige
+theme-override : custom.css
+transition : none
+vertical-center : false
