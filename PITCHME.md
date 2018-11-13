@@ -1,11 +1,24 @@
 # A simpler (micro) service setup with RabbitMQ
 
 +++
-How a message broker like RabbitMQ will help you to get up to speed with a (micro) services.
+### Overview
 
-This talk will explain the benefits of the RabbitMQ message broker
-and give valuable tips how to configure it.
-The slides will contain cute bunnies.
+How a message broker like RabbitMQ will help you to get up to _speed_ with a (micro) services.
+
+This talk will
+* explain what a **message broker** is
+* explain what makes **RabbitMQ special**
+* explain some challenges of a **service-oriented-architecture** (SOA)
+* explain how those can be solved with **one tool**
+* and give valuable tips **how to configure it**
+
++++
+### The slides will contain cute bunnies
+
++++
+### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/cute_bunny-waranya-mooldee-57761-unsplash.jpg)
+
+_I promised cute bunnies!_
 
 ---
 
@@ -603,7 +616,9 @@ channel.close
 
 ## Advanced message handling (TODO)
 
-* a list of TODOs for now
+* Publishing messages with different guarantees (TODO)
+* Consuming messages with different guarantees (TODO)
+* Handling errors (TODO)
 
 +++
 ### Publishing messages with different guarantees (TODO)
@@ -629,7 +644,9 @@ channel.close
 
 ## Production tips & tricks (TODO)
 
-* a list of TODOs for now
+* Monitoring and Alerting (TODO)
+* Cluster setup (TODO)
+* Best Practices (TODO)
 
 +++
 ### Monitoring and Alerting (TODO)
@@ -640,7 +657,7 @@ channel.close
 +++
 ### Cluster setup (TODO)
 
-* multipled nodes with low-maintenance / automatic synchronous replication
+* multiple nodes with low-maintenance / automatic synchronous replication
 * high availability (HA) queues
 * federated exchanges
 * benefits
@@ -666,15 +683,6 @@ To comfortably use **AMQP** with the RabbitMQ extensions, there are clients for 
 A list of the most popular clients for a few popular languages:
 
 +++
-### Perl
-
-**Net::AMQP::RabbitMQ**
-
-* https://metacpan.org/pod/Net::AMQP::RabbitMQ
-
-Interact with RabbitMQ over AMQP using librabbitmq
-
-+++
 ### Ruby
 
 The **bunny** gem
@@ -687,6 +695,15 @@ Instead of using bunny directly, you could implement a **framework** like:
 * sneakers: https://github.com/jondot/sneakers/wiki
 
 _Example code:_ https://github.com/mediafinger/rabbitmq_presentation/tree/master/hutch_consumer
+
++++
+### Perl
+
+The **Net::AMQP::RabbitMQ** module
+
+* https://metacpan.org/pod/Net::AMQP::RabbitMQ
+
+Interact with RabbitMQ over AMQP using librabbitmq
 
 +++
 ### Elixir
