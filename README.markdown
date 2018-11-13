@@ -550,7 +550,9 @@ channel.close
 
 ## Advanced message handling (TODO)
 
-* a list of TODOs for now
+* Publishing messages with different guarantees (TODO)
+* Consuming messages with different guarantees (TODO)
+* Handling errors (TODO)
 
 ### Publishing messages with different guarantees (TODO)
 
@@ -573,7 +575,9 @@ channel.close
 
 ## Production tips & tricks (TODO)
 
-* a list of TODOs for now
+* Monitoring and Alerting (TODO)
+* Cluster setup (TODO)
+* Best Practices (TODO)
 
 ### Monitoring and Alerting (TODO)
 
@@ -582,14 +586,14 @@ channel.close
 
 ### Cluster setup (TODO)
 
-* multipled nodes with low-maintenance / automatic synchronous replication
+* multiple nodes with low-maintenance / automatic synchronous replication
 * high availability (HA) queues
 * federated exchanges
 * benefits
 * drawbacks
 * configuration options
 
-## Best Practices (TODO)
+### Best Practices (TODO)
 
 * load JSON config file over API
 * use one connection per process
@@ -606,14 +610,6 @@ To comfortably use **AMQP** with the RabbitMQ extensions, there are clients for 
 
 A list of the most popular clients for a few popular languages:
 
-### Perl
-
-**Net::AMQP::RabbitMQ**
-
-* https://metacpan.org/pod/Net::AMQP::RabbitMQ
-
-Interact with RabbitMQ over AMQP using librabbitmq
-
 ### Ruby
 
 The **bunny** gem
@@ -626,6 +622,14 @@ Instead of using bunny directly, you could implement a **framework** like:
 * sneakers: https://github.com/jondot/sneakers/wiki
 
 _Example code:_ https://github.com/mediafinger/rabbitmq_presentation/tree/master/hutch_consumer
+
+### Perl
+
+The **Net::AMQP::RabbitMQ** module
+
+* https://metacpan.org/pod/Net::AMQP::RabbitMQ
+
+Interact with RabbitMQ over AMQP using librabbitmq
 
 ### Elixir
 
