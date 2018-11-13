@@ -1,10 +1,23 @@
-# A simpler (micro) service architecture with RabbitMQ
+# A simpler (micro) service setup with RabbitMQ
 
-How a message broker like RabbitMQ will help you to get up to speed with a (micro) services.
+### Overview
 
-This talk will explain the benefits of the RabbitMQ message broker
-and give valuable tips how to configure it.
-The slides will contain cute bunnies.
+How a message broker architecture will get you up to _speed_ with (micro) services.
+
+This talk will
+* explain what a **message broker** is
+* explain what makes **RabbitMQ special**
+* explain challenges of a **service-oriented-architecture** (SOA)
+* explain how those can be solved with **one tool**
+* and give valuable tips **how to configure it**
+
+### The slides will contain cute bunnies
+
+### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/cute_bunny-waranya-mooldee-57761-unsplash.jpg)
+
+_I promised cute bunnies!_
+
+---
 
 ## Use case
 
