@@ -1,10 +1,64 @@
-# RabbitMQ
+# A simpler (micro) service architecture with RabbitMQ
 
-An introduction to create a mutual understanding about **publishing**, **routing** and **consuming** messages with RabbitMQ and the Advanced Message Queueing Protocol (AMQP).
+How a message broker like RabbitMQ will help you to get up to speed with a (micro) services.
 
-AMQP was defined and implemented for the first time over ten years ago. Since then it expanded beyond the finance and banking sector it originated in, into many different industries.
+This talk will explain the benefits of the RabbitMQ message broker
+and give valuable tips how to configure it.
+The slides will contain cute bunnies.
 
-RabbitMQ is a high performance **message broker** based on AMQP. Using the broker architecture it can be scaled independently. Applications use it over lightweight client libraries.
+## Use case
+
+* starting fast with a service based architecture
+* microservices for dummys
+* adding or extracting some smaller services out of an existing monolith
+
+It can bring you a long way, before adding more complexity to your architecture.
+
+### You want
+
+Monolith
+* add one service
+* convert to service oriented architecture (SOA)
+
+Creating a microservice architecture
+
+### You will need
+
+Service Discovery / Service Registry
+(Consul/HashiCorp, Zookeeper/Apache)
+
+Communication between services.
+Why not (only) REST API?
+
+Load Balancing
+
+Background Jobs / Retry mechanism
+(Resque + Redis, SideKiq)
+
+Error handling
+
+### Or use one tool for all
+
+RabbitMQ - a message broker
+
+* simplifies architecture, only your services and a message broker
+* simplifies setup - don't need to understand many different tools
+
+#### Advantages
+
+Add new services or extract services out of a monolith, while avoiding:
+* complexity
+* multitude of tools
+* tight coupling
+* domino effects
+* high latency
+* pain in general
+
+#### Disadvantage
+
+Single point of failure
+
+(but I bet most (m)SOA have multiple points of failures)
 
 ### Decoupling services
 
@@ -25,6 +79,15 @@ This can reduce failure rate in peak times and at the same time speed up the sys
 The message broker can inform multiple systems about changes and events. This allows to add new functionality seamlessly.
 
 It can replicate data and events to data centers in other regions to achieve high availability. This raises the guarantees of message delivery and better performing front end apps for customers around the globe.
+
+
+An introduction to create a mutual understanding about **publishing**, **routing** and **consuming** messages with RabbitMQ and the Advanced Message Queueing Protocol (AMQP).
+
+### AMQP
+
+AMQP was defined and implemented for the first time over ten years ago. Since then it expanded beyond the finance and banking sector it originated in, into many different industries.
+
+RabbitMQ is a high performance **message broker** based on AMQP. Using the broker architecture it can be scaled independently. Applications use it over lightweight client libraries.
 
 ### Features and benefits
 
@@ -483,6 +546,12 @@ channel.basic_cancel(consumer_tag)
 channel.close
 ```
 
+---
+
+## Advanced message handling (TODO)
+
+* a list of TODOs for now
+
 ### Publishing messages with different guarantees (TODO)
 
 * publisher confirmation
@@ -502,18 +571,16 @@ channel.close
 
 ---
 
-## Monitoring and Alerting
+## Production tips & tricks (TODO)
 
-TODO:
+* a list of TODOs for now
+
+### Monitoring and Alerting (TODO)
 
 * `rabbitmqctl list_queues` alert on queue length threshold
 * use API to compare current queue setup with expected configuration
 
----
-
-## Cluster setup
-
-TODO:
+### Cluster setup (TODO)
 
 * multipled nodes with low-maintenance / automatic synchronous replication
 * high availability (HA) queues
@@ -522,11 +589,7 @@ TODO:
 * drawbacks
 * configuration options
 
----
-
-## Best Practices
-
-TODO:
+## Best Practices (TODO)
 
 * load JSON config file over API
 * use one connection per process
@@ -542,6 +605,14 @@ TODO:
 To comfortably use **AMQP** with the RabbitMQ extensions, there are clients for basically all modern languages.
 
 A list of the most popular clients for a few popular languages:
+
+### Perl
+
+**Net::AMQP::RabbitMQ**
+
+* https://metacpan.org/pod/Net::AMQP::RabbitMQ
+
+Interact with RabbitMQ over AMQP using librabbitmq
 
 ### Ruby
 
@@ -602,7 +673,7 @@ https://github.com/Antti/rust-amqp
 
 ## Thanks for reading!
 
-Assembled by [**Andreas Finger**](http://mediafinger.com) in February 2018 in Barcelona
+Created by [**Andreas Finger**](http://mediafinger.com) in November 2018 in Barcelona
 
 [@mediafinger on Github](https://github.com/mediafinger)
 

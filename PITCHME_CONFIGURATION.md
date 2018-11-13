@@ -1,94 +1,38 @@
-# A simpler (micro) service architecture with RabbitMQ
+# RabbitMQ
 
-How a message broker like RabbitMQ will help you to get up to speed with a (micro) services.
+An introduction to create a mutual understanding about **publishing**, **routing** and **consuming** messages with RabbitMQ and the Advanced Message Queueing Protocol (AMQP).
 
-This talk will explain the benefits of the RabbitMQ message broker
-and give valuable tips how to configure it.
-The slides will contain cute bunnies.
+RabbitMQ is a high performance **message broker** based on AMQP. Using the broker architecture it can be scaled independently. Applications use it over lightweight client libraries.
 
-## Use case
++++
+### Thank you for coming
 
-* starting fast with a service based architecture
-* microservices for dummys
-* adding or extracting some smaller services out of an existing monolith
+![Happy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/happy_1024x640.jpg)
 
-It can bring you a long way, before adding more complexity to your architecture.
-
-### You want
-
-Monolith
-* add one service
-* convert to service oriented architecture (SOA)
-
-Creating a microservice architecture
-
-### You will need
-
-Service Discovery / Service Registry
-(Consul/HashiCorp, Zookeeper/Apache)
-
-Communication between services.
-Why not (only) REST API?
-
-Load Balancing
-
-Background Jobs / Retry mechanism
-(Resque + Redis, SideKiq)
-
-Error handling
-
-### Or use one tool for all
-
-RabbitMQ - a message broker
-
-* simplifies architecture, only your services and a message broker
-* simplifies setup - don't need to understand many different tools
-
-#### Advantages
-
-Add new services or extract services out of a monolith, while avoiding:
-* complexity
-* multitude of tools
-* tight coupling
-* domino effects
-* high latency
-* pain in general
-
-#### Disadvantage
-
-Single point of failure
-
-(but I bet most (m)SOA have multiple points of failures)
-
++++
 ### Decoupling services
 
-In our current service oriented architecture, the system triggering an event (or receiving it from an external service), would manage large parts of the logic needed to react to this event. It would make calls to different services and endpoints to create or update records. To do this in a resilient way, we setup background workers in each application that handle asynchronous processing and retries.
+In any (micro-) service oriented architecture the systems trigger events or receive them from external services. Other (internal) services should react to these events by changing the database, calling more services or by just responding with a calculation.
 
-Using a message bus you would usually inform other systems about events and those implement the logic if and how to react.
+To do this in a resilient way, we need background workers that handle asynchronous processing and retries (unless we us a language like Erlang).
 
-Decoupling services by introducing an asynchronous messaging system between them, allows to change and scale systems independently.
+An asynchronous messaging system allows to change and scale systems independently.
 
++++
 ### Handling high volumes of messages
 
-The message broker distributes messages and can in this process throttle the load towards the message receiving systems.
+The message broker routes messages and can in this process throttle the load towards the message receiving systems.
 
 This can reduce failure rate in peak times and at the same time speed up the systems sending messages, as they are no longer blocked by waiting for an answer of a potentially slow system. This can go as far as decoupling your database writes.
 
++++
 ### Broadcasting and replicating messages
 
 The message broker can inform multiple systems about changes and events. This allows to add new functionality seamlessly.
 
 It can replicate data and events to data centers in other regions to achieve high availability. This raises the guarantees of message delivery and better performing front end apps for customers around the globe.
 
-
-An introduction to create a mutual understanding about **publishing**, **routing** and **consuming** messages with RabbitMQ and the Advanced Message Queueing Protocol (AMQP).
-
-### AMQP
-
-AMQP was defined and implemented for the first time over ten years ago. Since then it expanded beyond the finance and banking sector it originated in, into many different industries.
-
-RabbitMQ is a high performance **message broker** based on AMQP. Using the broker architecture it can be scaled independently. Applications use it over lightweight client libraries.
-
++++
 ### Features and benefits
 
 * Open source, maintained by Pivotal Software Inc
@@ -100,11 +44,17 @@ RabbitMQ is a high performance **message broker** based on AMQP. Using the broke
 * clients libraries for most modern languages exist
 * background workers are a subset of messaging systems and come included
 
++++
+### Playing nicely with others
+
+![Bunny with Cat](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/with_cat_1.jpg)
+
++++
 ### Alternative Protocols
 
 RabbitMQ features a full implementation of AMQP 0.9.1 as well as several custom additions over it.
 
-While this how-to focuses on RabbitMQ's AMQP implementation only, RabbitMQ also features implementations of a few other messaging protocols that can be used for special use cases.
+While this introduction focuses on RabbitMQ's AMQP implementation only, RabbitMQ also features implementations of a few other messaging protocols that can be used for special use cases.
 
 * MQTT a lightweight protocol often used to implement pub-sub patterns with high latency mobile devices
 * STOMP a text-based protocol creates compatibility with ApacheMQ
@@ -116,20 +66,30 @@ While this how-to focuses on RabbitMQ's AMQP implementation only, RabbitMQ also 
 
 ![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
 
++++
+### Ack the complexity
+
+![Fancy Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/dressed.jpg)
+
 ---
 
 ## Publishing messages
 
 When publishing messages, RabbitMQ offers multiple methods to pick from. Each choice is a **trade-off between speed and security** that messages have really been delivered. All options can be combined to find the sweet spot for the type of messages being send on a specific queue.
 
-This list skips the Transaction pattern RabbitMQ implements (AMQP TX), as the alternatives offer more lightweight and less complex methods to achieve the same goals.
++++
+### Trade-offs between speed and security
 
+![Rabbit with Turtle](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/with_turtle.jpg)
+
++++
 ### Fastest, no guarantees
 
 * fire and forget, messages might get lost, without informing the publisher about it
 * set `mandatory=true` to get messages returned when they are not routable, returned messages have to be handled
 * set `immediate=true` to get messages returned when no queue is ready to consume them, returned messages have to be handled
 
++++
 ### Publisher confirmation®
 
 * lightweight and quick way to ensure a message can be routed and the **broker** has processed it
@@ -140,15 +100,7 @@ This list skips the Transaction pattern RabbitMQ implements (AMQP TX), as the al
 * the publisher should make no assumptions about the exact time a message is confirmed
 * if the broker runs into issues, it will `basic.nack` messages
 
-### High availability (HA) queues
-
-* a cluster is mandatory to use HA queues
-* messages will be handled on all nodes of the cluster that handle the HA queue
-* if a node goes down, the message does still exist on the other nodes
-* this can replace slow persistence to disk in many cases
-* once a message is consumed from any node in the cluster, all copies will be removed
-* clusters can be connected in different ways, this is a topic of its own
-
++++
 ### Persisted, slowest but most secure
 
 * set `delivery-mode=2` to persist every message before queueing it
@@ -159,22 +111,40 @@ This list skips the Transaction pattern RabbitMQ implements (AMQP TX), as the al
 * use _lazy queues_ when you expect extremely long queues, or suffer from unpredictable performance
 * _lazy queues_® are slower, as they remove the messages from RAM
 
++++
+### Cluster with many nodes
+
+![Rabbit Cluster](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/cluster_1.jpg)
+
++++
+### High availability (HA) queues
+
+* a cluster is mandatory to use HA queues
+* messages will be handled on all nodes of the cluster that handle the HA queue
+* if a node goes down, the message does still exist on the other nodes
+* this can replace slow persistence to disk in many cases
+* once a message is consumed from any node in the cluster, all copies will be removed
+* clusters can be connected in different ways, this is a topic of its own
+
 ---
 
 ## Consuming messages
 
 When consuming messages, RabbitMQ offers multiple methods to pick from. Each choice is a **trade-off between speed and security** that messages have really been consumed.
 
-This list skips the Transaction pattern RabbitMQ implements (AMQP TX), as the alternatives offer more lightweight and less complex methods to achieve the same goals.
++++
+### Listening to messages
 
-It also skips the `get` pattern, as the performance is worse compared to `consuming` messages. At the same time it does not offer benefits over the available alternatives.
+![Listening Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/huge_ears.jpg)
 
++++
 ### Fastest, no guarantees
 
 * messages are consumed, but `no_ack` is sent
 * no guarantee if a message was delivered or successfully processed
 * the consumer might be overloaded and crash with an unknown number of buffered messages
 
++++
 ### Quality of Service (QoS) level, ack after prefetch count reached
 
 * set a QoS level, to determine how many messages to prefetch, before sending an `ack`
@@ -185,6 +155,7 @@ It also skips the `get` pattern, as the performance is worse compared to `consum
 * lightweight system that allows for high throughput rates
 * needs benchmarking to find the perfect prefect_count per queue
 
++++
 ### Delivery confirmation, (manual) ack, slowest but most secure
 
 * the default setting is to send an automatic `ack` after a message was sent
@@ -192,38 +163,63 @@ It also skips the `get` pattern, as the performance is worse compared to `consum
 * send a `basic.nack` or `basic.reject` to reject and delete a message
 * reject a message with `requeue=true` to redeliver it
 
++++
+### Are you still with me?
+![Yawning](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/yawning.jpg)
 ---
 
 ## Examples
 
 Real world use cases and some thoughts about which **publishing** and which **consumption methods** to chose.
 
+![Two Bunnies](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/face2face.jpg)
+
++++
 ### Logging / Metrics
 
-Typical fire and forget use case. Losing some of the many millions of messages won't affect the system, but slow message handling would. Choose the _fastest publishing and consumption methods_ without guarantees.
+Typical fire and forget use case. Losing some of the many millions of messages won't affect the system.
 
-### SMS-TAN / Email notifications
+Slow message handling would affect the system. Choose the _fastest publishing and consumption methods_ without guarantees.
 
-_Publishing confirmation_ can be set to ensure the message has been routed. In case you are sending many notifications per client per day, this might be the only guarantee you opt in to. You expect the delivery to succeed in almost all cases. And you are aware that there will never be a guarantee that a recipient will really receive an email is his inbox or a text message on this phone.
++++
+### Email notifications
 
-If you need the guarantee that your SMS or email system is processing the messages, setting a _QoS level_ and receiving an `ack` after multiple messages have been processed is a reasonable choice.
+_Publishing confirmation_ can be set to ensure the message has been routed. In case you are sending many email notifications per client per day, this might be the only guarantee you opt in to. You expect the delivery to succeed in almost all cases.
 
-If it's not about pure notifications, but information that has to reach the customer, _dead-letter queues_ should be used to handle failures.
+And you are aware that there will never be a guarantee that a recipient will really receive an email is his inbox.
 
++++
+### SMS-TAN
+
+If you need the guarantee that your SMS service is processing the messages, setting a _QoS level_ and receiving an `ack` after multiple messages have been processed is a reasonable choice.
+
++++
 ### Data changes
 
 A customer changes his personal data on one system and it has to inform other application about it. In this case the choice of methods depends heavily on how important it is for the other applications to have the latest data.
 
 An invoicing tool that sends out emails, might be ok with eventual consistency of the real world address of the customer.
 
-The service informing about the data change could send messages with _publishing confirmation_ and no further guarantees.
-
++++
 #### Data changes
 
-However you will need a strategy to create consistency eventually. Maybe a job that sends messages every night for each customer whose data changed in the last 24h. As you might have less system load at night, using a _QoS level_ might give you the guarantees you need.
+The service informing about the data change could send messages with _publishing confirmation_ and no further guarantees.
 
-Nevertheless the same tool might expect to always be immediately informed about changes in the payment data or email address. In this case you would need to pick more secure messaging strategies like a _HA queue_ and _manual `ack`_ after message delivery.
+However you will need a strategy to create consistency eventually. A cron job that sends messages every night for each customer whose data changed in the last 24h can create consistency.
 
+As your system might have less load at night time, you could device to set a _QoS level_ and handle failures with _dead-letter queues_.
+
++++
+#### Data changes
+
+Nevertheless the same invoicing tool might expect to always be immediately informed about changes in the payment data or email address. In this case you would need to pick more secure messaging strategies like a _HA queue_ and _manual `ack`_ after message delivery.
+
++++
+### Keep your gold safe
+
+![Golden bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/gold.jpg)
+
++++
 ### Money transfers
 
 When a redundant cluster is available, using _HA queues_ with _delivery confirmation_ and _dead-letter exchanges_ is a secure choice.
@@ -239,6 +235,7 @@ As money transfers need all possible guarantees, you will want to add _persisten
 * a default _direct exchange_ with the name `''` (empty string) exists
 * RabbitMQ allows to bind exchanges to exchanges for extra flexibility, which comes with extra complexity and overhead, you most probably won't need this feature
 
++++
 ### Queues
 
 * after declaring an exchange, `bind` at least one queue to it
@@ -248,7 +245,12 @@ As money transfers need all possible guarantees, you will want to add _persisten
 * queues can be declared to be `exclusive` and will be deleted when the connection closes
 * to enhance performance, multiple **consumers** can subscribe to a queue, messages are then distributed in a _round robin_ way, so that each consumer will process a part of all messages, which helps to keep queues short
 
++++
+### The broker routes messages from exchanges to queues
 
+![Typical message broker](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/football.jpg)
+
++++
 ### Direct exchanges
 
 * match the `routing_key` of messages to the **binding key** of queues
@@ -259,6 +261,7 @@ As money transfers need all possible guarantees, you will want to add _persisten
 * every queue will receive all messages matching the **binding key**
 * _direct exchanges_ are a good choice for routing reply messages
 
++++
 ### Fanout exchanges
 
 * all messages published are delivered to all queues bound to the exchange
@@ -266,6 +269,7 @@ As money transfers need all possible guarantees, you will want to add _persisten
 * faster routing, as not matching has to be performed
 * all applications consuming from a _fanout exchange_ need to handle all kinds of messages delivered through it
 
++++
 ### Topic exchanges
 
 * `routing.keys` are dot separated, queues define a **binding key**
@@ -277,6 +281,13 @@ As money transfers need all possible guarantees, you will want to add _persisten
 * emulate _fanout exchange_ queues by binding to any routing.key through `#`
 * _topic exchanges_ are very flexible and a good future-proof choice
 
+
++++
+### WAT? Even more?
+
+![Enough!](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/lionhead.jpg)
+
++++
 ### Headers exchanges
 
 * inspects the `headers` hash of the message `properties` to route the message
@@ -286,18 +297,18 @@ As money transfers need all possible guarantees, you will want to add _persisten
 * additional key-value pairs included in the headers property do not influence the routing
 
 
++++
 ### Other exchanges
 
 RabbitMQ provides other types of exchanges through plugins to enable special use cases. For example the _consistent-hashing_® exchange to load-balance the number of messages sent to queues in a cluster.
 
 
++++
 ### Handling failure
 
-TODO:
+![Waffle head](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/waffle.jpg)
 
-* retries and final failure
-* dead-letter boxes and poisonous messages https://derickbailey.com/2016/03/28/dealing-with-dead-letters-and-poison-messages-in-rabbitmq/
-
++++
 #### Alternate exchanges
 
 When a published message can not be routed by the broker.
@@ -308,6 +319,7 @@ When a published message can not be routed by the broker.
 * declare an exchange and `bind` at least one queue to it
 * messages stay in the `alternate-exchange` queue(s) for inspection, unless a consumer is defined
 
++++
 #### Dead-letter exchanges®
 
 When a queued message expires or is rejected by the consumer.
@@ -318,6 +330,7 @@ When a queued message expires or is rejected by the consumer.
 * having only messages of one type in the queue makes error handling easier
 * the message headers will be changed
 * could be combined with a delayed retry strategy: https://github.com/rabbitmq/rabbitmq-delayed-message-exchange
+* dead-letter boxes and poisonous messages https://derickbailey.com/2016/03/28/dealing-with-dead-letters-and-poison-messages-in-rabbitmq/
 
 ---
 
@@ -329,6 +342,7 @@ In a **direct exchange** every queue bound to an exact `routing_key` of a messag
 
 A **headers exchange** allows for very flexible routing. It matches `key-value` pairs of the `headers` `property` of messages.
 
++++
 ### Topic exchange
 
 Very flexible routing can be implemented through the **topic exchange.** Pattern matching allows queues to handle all, some or only very specific messages. This way it is capable to emulate the _direct_ and the _fanout exchange_.
@@ -337,6 +351,7 @@ The parts of **routing keys** are separated by dots `.`
 
 The **binding keys** implement pattern matching by including asterisk `*` or pound `#` characters.
 
++++
 ### Routing keys schema
 
 Let's assume we have a service that connects tech communities all over the world. Our routing keys have usually three parts:  
@@ -350,6 +365,8 @@ a _city_, a _topic_ and a _category_:
 | madrid    | testing | question |
 | vancouver | wwcode  | tutorial |
 
+
++++
 ### Routing keys examples
 
 The above list would allow for `routing.keys` like the following:
@@ -360,12 +377,14 @@ The above list would allow for `routing.keys` like the following:
 * `berlin.testing.job`
 * `vancouver.wwcode.event`
 
++++
 ### Binding queues to the topic exchange
 
 Queues are bound to the exchange by a _binding key_ which is a pattern or the exact string.
 
 Messages can be delivered to multiple queues that can have one or more consumers each.
 
++++
 ### Binding examples
 
 | Binding key            | Explanation                                |
@@ -378,6 +397,7 @@ Messages can be delivered to multiple queues that can have one or more consumers
 | `#.job`                | matches all messages about Jobs            |
 | `#`                    | all messages                               |
 
++++
 ### Message flow diagram
 
 ![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
@@ -390,6 +410,12 @@ When discussing publishing, routing and consumption of messages, parameters like
 
 Together the three frames represent a full AMQP message.
 
++++
+### Message properties
+
+![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/cute_flower.jpg)
+
++++
 ### Message properties
 
 | Property           | Type      | Used by     | Use case                                                               |
@@ -401,6 +427,7 @@ Together the three frames represent a full AMQP message.
 | `timestamp`        | timestamp | Application | Unix epoch timestamp in seconds, use `Time.now.utc.to_i`               |
 | `type`             | String    | Application | use it to describe message or payload                                  |
 
++++
 ### Properties that (can) influence routing
 
 | Property         | Type   | Used by      | Use case                                                                  |
@@ -411,6 +438,7 @@ Together the three frames represent a full AMQP message.
 | `headers`        | Hash   | Rabbit & App | key-value table to store any additional metadata, can be used for routing |
 | `reply_to`       | String | RabbitMQ     | commonly used to name a callback queue                                    |
 
++++
 ### Advanced Properties
 
 | Property   | Type   | Used by  | Use case                                                         |
@@ -418,6 +446,7 @@ Together the three frames represent a full AMQP message.
 | `priority` | 0..9   | RabbitMQ | 0 has highest priority, usage is a bit tricky                    |
 | `user_id`  | String | RabbitMQ | identify message was sent by logged-in user, don't manipulate it |
 
++++
 ### Payload
 
 They payload is contained in the **body frame.** When the size of the payload exceeds the maximum size of a message frame, it will be split over multiple **body frames**. The form of the payload is described by the `content-type` and `content-encoding` _header properties_.
@@ -432,13 +461,9 @@ To try those examples you'll need a running RabbitMQ broker. The examples are wr
 
 http://localhost:15672/ (user: guest, password: guest)
 
-Instead of using bunny directly, you could chose to implement a **framework** like:
+![Bunny Holmes](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/dressed_as_holmes.jpg)
 
-* hutch: https://github.com/gocardless/hutch
-* sneakers: https://github.com/jondot/sneakers/wiki
-
-But those are not covered in here.
-
++++
 ### Setting up a topic exchange and binding queues to it
 
 The following code snippets will:
@@ -451,6 +476,7 @@ The following code snippets will:
 * create a consumer for the **queue**
 * bind the consumer to the **queue**
 
++++
 #### Open connection and create channel for publisher
 
 ```ruby
@@ -462,6 +488,7 @@ connection.start
 channel = connection.create_channel
 ```
 
++++
 #### Declare exchange and queue and bind them
 
 ```ruby
@@ -480,6 +507,7 @@ queue = channel.queue(
 queue.bind(exchange, "example.routing.key")
 ```
 
++++
 #### Publish messages to the exchange
 
 ```ruby
@@ -493,6 +521,12 @@ queue.bind(exchange, "example.routing.key")
 end
 ```
 
++++
+### Let's jump to the consumer
+
+![Sporty Rabbit](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/jumping.jpg)
+
++++
 #### Open connection and create channel for consumer
 
 ```ruby
@@ -504,6 +538,7 @@ connection.start
 channel = connection.create_channel
 ```
 
++++
 #### Create consumer for queue
 
 ```ruby
@@ -520,6 +555,7 @@ consumer = Bunny::Consumer.new(
 )
 ```
 
++++
 #### Subscribe consumer to queue
 
 ```ruby
@@ -536,6 +572,7 @@ end
 queue.subscribe_with(consumer)
 ```
 
++++
 #### Take a break / close connection
 
 ```ruby
@@ -548,48 +585,26 @@ channel.close
 
 ---
 
-## Advanced message handling (TODO)
-
-* a list of TODOs for now
-
-### Publishing messages with different guarantees (TODO)
-
-* publisher confirmation
-* persistence
-
-### Consuming messages with different guarantees (TODO)
-
-* ack
-* prefetch_count
-
-### Handling errors (TODO)
-
-* delivery failure
-* processing failure
-* retries
-* final failure
-
----
-
-## Production tips & tricks (TODO)
-
-* a list of TODOs for now
-
-### Monitoring and Alerting (TODO)
+## Monitoring and Alerting
 
 * `rabbitmqctl list_queues` alert on queue length threshold
 * use API to compare current queue setup with expected configuration
 
-### Cluster setup (TODO)
+![Tongue out](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/tongue_out.jpg)
 
-* multipled nodes with low-maintenance / automatic synchronous replication
+---
+
+## Cluster setup
+
+* multiple nodes with low-maintenance / automatic synchronous replication
 * high availability (HA) queues
 * federated exchanges
-* benefits
-* drawbacks
-* configuration options
 
-## Best Practices (TODO)
+![Duracell](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/duracell.png)
+
+---
+
+## Best Practices
 
 * load JSON config file over API
 * use one connection per process
@@ -597,6 +612,11 @@ channel.close
 * use separate connections for publish and consume
 * reuse connections, keep connection:channel count low
 * keep queues short, if not possible use lazy queues
+
++++
+### Getting the basics right, allows you to relax
+
+![Lion](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/lion.jpg)
 
 ---
 
@@ -606,14 +626,12 @@ To comfortably use **AMQP** with the RabbitMQ extensions, there are clients for 
 
 A list of the most popular clients for a few popular languages:
 
-### Perl
++++
+### Ruby
 
-**Net::AMQP::RabbitMQ**
+![Ruby](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/ruby_400x400.png)
 
-* https://metacpan.org/pod/Net::AMQP::RabbitMQ
-
-Interact with RabbitMQ over AMQP using librabbitmq
-
++++
 ### Ruby
 
 The **bunny** gem
@@ -625,32 +643,35 @@ Instead of using bunny directly, you could implement a **framework** like:
 * hutch: https://github.com/gocardless/hutch
 * sneakers: https://github.com/jondot/sneakers/wiki
 
-_Example code:_ https://github.com/mediafinger/rabbitmq_presentation/tree/master/hutch_consumer
-
++++
 ### Elixir
 
 The **amqp** hex package
 
 https://github.com/pma/amqp
 
++++
 ### Go
 
 The **amqp** library
 
 https://github.com/streadway/amqp
 
++++
 ### Java
 
 The **JMS** client
 
 https://github.com/rabbitmq/rabbitmq-jms-client
 
++++
 ### JavaScript / Node
 
 The **amqp.node** library
 
 https://github.com/squaremo/amqp.node
 
++++
 ### Rust
 
 The **rust-amqp** library
@@ -671,12 +692,20 @@ https://github.com/Antti/rust-amqp
 
 ---
 
-## Thanks for reading!
+## Thanks for your time
 
-Created by [**Andreas Finger**](http://mediafinger.com) in November 2018 in Barcelona
+![Thank you!](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/high_five.jpg)
+
++++
+
+### Thank you
+
+Assembled by [**Andreas Finger**](http://mediafinger.com) in February and March 2018 in Barcelona
 
 [@mediafinger on Github](https://github.com/mediafinger)
 
 [@mediafinger on Twitter](https://twitter.com/mediafinger)
 
-This presentation and code examples: https://github.com/mediafinger/rabbitmq_presentation
+This presentation: https://gitpitch.com/mediafinger/rabbitmq_presentation#/
+
+A longer markdown (without bunnies): https://github.com/mediafinger/rabbitmq_presentation/blob/master/README.markdown
