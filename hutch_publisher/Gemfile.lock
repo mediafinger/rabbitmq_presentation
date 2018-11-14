@@ -31,14 +31,14 @@ GEM
       rspec (>= 2.0, < 4.0)
     minitest (5.11.3)
     multi_json (1.13.1)
-    mustermann (1.0.2)
+    mustermann (1.0.3)
     parallel (1.12.1)
-    parser (2.5.0.4)
+    parser (2.5.3.0)
       ast (~> 2.4.0)
     powerpack (0.1.1)
     puma (3.11.3)
-    rack (2.0.4)
-    rack-protection (2.0.1)
+    rack (2.0.6)
+    rack-protection (2.0.4)
       rack
     rainbow (3.0.0)
     rake (12.3.0)
@@ -65,10 +65,10 @@ GEM
     rubocop-rspec (1.23.0)
       rubocop (>= 0.52.1)
     ruby-progressbar (1.9.0)
-    sinatra (2.0.1)
+    sinatra (2.0.4)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.1)
+      rack-protection (= 2.0.4)
       tilt (~> 2.0)
     temple (0.8.0)
     thread_safe (0.3.6)
@@ -90,7 +90,7 @@ DEPENDENCIES
   rspec (~> 3.7)
   rubocop (= 0.52.1)
   rubocop-rspec (~> 1.22)
-  sinatra (~> 2.0.1)
+  sinatra (> 2.0.2)
 
 BUNDLED WITH
-   1.16.1
+   1.17.1
