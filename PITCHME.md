@@ -3,12 +3,12 @@
 +++
 ### Overview
 
-How a message broker like RabbitMQ will help you to get up to _speed_ with a (micro) services.
+How a message broker architecture will get you up to _speed_ with (micro) services.
 
 This talk will
 * explain what a **message broker** is
 * explain what makes **RabbitMQ special**
-* explain some challenges of a **service-oriented-architecture** (SOA)
+* explain challenges of a **service-oriented-architecture** (SOA)
 * explain how those can be solved with **one tool**
 * and give valuable tips **how to configure it**
 
@@ -16,7 +16,7 @@ This talk will
 ### The slides will contain cute bunnies
 
 +++
-### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/cute_bunny-waranya-mooldee-57761-unsplash.jpg)
+### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cute_bunny-waranya-mooldee-57761-unsplash.jpg)
 
 _I promised cute bunnies!_
 

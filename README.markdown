@@ -13,7 +13,7 @@ This talk will
 
 ### The slides will contain cute bunnies
 
-### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/perl_and_friends/assets/bunnies/cute_bunny-waranya-mooldee-57761-unsplash.jpg)
+### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/cute_bunny-waranya-mooldee-57761-unsplash.jpg)
 
 _I promised cute bunnies!_
 
