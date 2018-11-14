@@ -19,67 +19,166 @@ _I promised cute bunnies!_
 
 ---
 
-## Use case
+## Message Broker
 
-* starting fast with a service based architecture
-* microservices for dummys
-* adding or extracting some smaller services out of an existing monolith
+Explain
+* messages systems in general
+* pub / sub
+* message broker
+* background workers are a subset of messaging systems and come included
+* events
 
-It can bring you a long way, before adding more complexity to your architecture.
+---
 
-### You want
+## RabbitMQ
 
-Monolith
-* add one service
+RabbitMQ is a high performance **message broker** based on AMQP.
+
+Using the broker architecture it can be scaled independently.
+
+Applications interact with it over lightweight client libraries.
+
+### AMQP
+
+AMQP was defined and implemented for the first time over ten years ago. Since then it expanded beyond the finance and banking sector it originated in, into many different industries.
+
+RabbitMQ features a full implementation of AMQP 0.9.1 as well as several custom additions over it.
+
+### Alternative protocols
+
+While this how-to focuses on RabbitMQ's AMQP implementation only, RabbitMQ also features implementations of a few other messaging protocols that can be used for special use cases.
+
+* MQTT a lightweight protocol often used to implement pub-sub patterns with high latency mobile devices
+* STOMP a text-based protocol creates compatibility with ApacheMQ
+* statelessd / Hare for high velocity fire and forget messaging
+
+### Features and benefits
+
+* general purpose message broker
+* open source, maintained by Pivotal Software Inc
+* written in Erlang
+* lightweight, but powerful
+* layers of security
+* clients libraries for most modern languages exist
+
+### Where RabbitMQ shines
+
+* very flexible in controlling trade-offs between reliable message throughput and performance
+* plugins to extend core-functionality
+* it is fast: 20k+/sec messages can be handled on a _single queue_
+* clustering for redundancy is simple to setup
+
+### Alternative (?) Kafka
+
+* Kafka is a different tool
+* specialized on event sourcing
+* less flexible
+* very high throughput (100k/sec)
+
+When you want event sourcing and replayability, use Kafka.
+
+For most other cases RabbitMQ might be the better choice.
+
+---
+
+## Message flow diagram
+
+![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
+
+---
+
+## (Micro) service oriented architecture
+
+* extract services from a monolith
+* add one or more services
 * convert to service oriented architecture (SOA)
+* create a microservice setup
 
-Creating a microservice architecture
+### Challenges of SOA
 
-### You will need
+* Service Discovery / Service Registry
+* Communication between services
+* Load Balancing
+* Resilient services
 
-Service Discovery / Service Registry
-(Consul/HashiCorp, Zookeeper/Apache)
+---
 
-Communication between services.
-Why not (only) REST API?
+## How RabbitMQ can help solve those challenges
 
-Load Balancing
+* Service Discovery / Service Registry --> services register with the broker
+* Communication between services --> decoupling over queues
+* Load Balancing --> multiple consumers
+* Resilient services --> keep messages queued, rerun later
 
-Background Jobs / Retry mechanism
-(Resque + Redis, SideKiq)
 
-Error handling
+### Service Discovery / Service Registry
 
-### Or use one tool for all
+Typical solution: Consul from HashiCorp or Zookeeper from Apache
 
-RabbitMQ - a message broker
+With RabbitMQ:
+* services register with the broker
+* other services don't need to know of each other
+* services publish to exchanges of the broker
+* services consume from queues of the broker
 
-* simplifies architecture, only your services and a message broker
-* simplifies setup - don't need to understand many different tools
+### Communication between services
 
-#### Advantages
+Typical solution: synchronous REST API
 
-Add new services or extract services out of a monolith, while avoiding:
-* complexity
-* multitude of tools
-* tight coupling
-* domino effects
-* high latency
-* pain in general
+With RabbitMQ:
+* services publish and consume messages
+* it's asynchronous!
+* removing and adding services becomes simpler through decoupling
 
-#### Disadvantage
+### Load Balancing
 
-Single point of failure
+Typical solution: configure a software or hardware load-balancer. (Spoiler: it's tricky!)
 
-(but I bet most (m)SOA have multiple points of failures)
+With RabbitMQ:
+* asynchronous handling to soften spikes: messages can stay in queue till consumed
+* each queue can be consumed by multiple consumers: just add another machine for a special task
+
+### Resilient services
+
+Typical solution: a few retries and then error logging. When thousands of calls fail, your system might lose important data. Hard to recover / rerun later.
+
+With RabbitMQ:
+* Message brokers use queues where timeouts are less of an issue
+* retry logic can be individualized for every queue or even for every message type
+* when the other failing service is available again, messages in queues can be delivered as if nothing happened
+
+### Background Jobs
+
+Typical solution: in not-so-concurrent languages you will use extra services to handle jobs asynchronously in the background. In the Ruby world the combination of Resque and Redis is often used and SideKiq is popular as well.
+
+With RabbitMQ:
+* as background workers are a subset of messaging systems, they come included in RabbitMQ
+* no need to setup, configure and learn to use an additional system
+
+---
+
+## Use cases
+
+* Decoupling services
+* Scale and extend systems
+* Handling high volumes of messages
+* Broadcasting and replicating messages
 
 ### Decoupling services
 
-In our current service oriented architecture, the system triggering an event (or receiving it from an external service), would manage large parts of the logic needed to react to this event. It would make calls to different services and endpoints to create or update records. To do this in a resilient way, we setup background workers in each application that handle asynchronous processing and retries.
+In many service oriented architecture, the system triggering an event (or receiving it from an external service), might manage large parts of the logic needed to react to this event. It could make calls to different services and endpoints to create or update records.
 
-Using a message bus you would usually inform other systems about events and those implement the logic if and how to react.
+Doing this in a resilient way, involves usually background workers in each application that handles asynchronous processing and retries.
+
+Using a message bus means to inform other systems about events and those implement the logic if and how to react.
+
+### Scale and extend systems
 
 Decoupling services by introducing an asynchronous messaging system between them, allows to change and scale systems independently.
+
+Adding additional consumers in peak times is as simple as spinning up a new instance.
+
+Extending the system by adding new services to it can be done independently
 
 ### Handling high volumes of messages
 
@@ -93,41 +192,43 @@ The message broker can inform multiple systems about changes and events. This al
 
 It can replicate data and events to data centers in other regions to achieve high availability. This raises the guarantees of message delivery and better performing front end apps for customers around the globe.
 
+---
 
-An introduction to create a mutual understanding about **publishing**, **routing** and **consuming** messages with RabbitMQ and the Advanced Message Queueing Protocol (AMQP).
+## One tool for everything - a silver bullet?
 
-### AMQP
+Using RabbitMQ as the central broker between your services
+* simplifies architecture, only your services and a message broker
+* simplifies setup - don't need to maintain many different tools
 
-AMQP was defined and implemented for the first time over ten years ago. Since then it expanded beyond the finance and banking sector it originated in, into many different industries.
+#### Advantages
 
-RabbitMQ is a high performance **message broker** based on AMQP. Using the broker architecture it can be scaled independently. Applications use it over lightweight client libraries.
+Starting fast with a service based architecture, while avoiding:
+* complexity
+* multitude of tools
+* tight coupling
+* domino effects
+* high latency
+* pain in general
 
-### Features and benefits
+#### Disadvantage
 
-* Open source, maintained by Pivotal Software Inc
-* written in Erlang
-* lightweight, but powerful
-* very flexible in controlling trade-offs between reliable message throughput and performance
-* plugins to extend core-functionality
-* layers of security
-* clients libraries for most modern languages exist
-* background workers are a subset of messaging systems and come included
+* single point of failure  
+  > Though I bet most (m)SOA have multiple points of failures  
+  >ヽ༼ ಠ益ಠ ༽ﾉ
+* growing systems will adapt more complex tooling eventually
 
-### Alternative Protocols
-
-RabbitMQ features a full implementation of AMQP 0.9.1 as well as several custom additions over it.
-
-While this how-to focuses on RabbitMQ's AMQP implementation only, RabbitMQ also features implementations of a few other messaging protocols that can be used for special use cases.
-
-* MQTT a lightweight protocol often used to implement pub-sub patterns with high latency mobile devices
-* STOMP a text-based protocol creates compatibility with ApacheMQ
-* statelessd / Hare for high velocity fire and forget messaging
 
 ---
 
 ## Message flow diagram
 
 ![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
+
+---
+
+## RabbitMQ configuration
+
+Detailed information which configuration options for **publishing**, **routing** and **consuming** messages with RabbitMQ exist and which _tradeoffs between speed and guarantees_ can be made.
 
 ---
 
@@ -174,6 +275,12 @@ This list skips the Transaction pattern RabbitMQ implements (AMQP TX), as the al
 
 ---
 
+## Message flow diagram
+
+![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
+
+---
+
 ## Consuming messages
 
 When consuming messages, RabbitMQ offers multiple methods to pick from. Each choice is a **trade-off between speed and security** that messages have really been consumed.
@@ -204,6 +311,12 @@ It also skips the `get` pattern, as the performance is worse compared to `consum
 * change it to `manual_ack=true` to send the `ack` after processing the message
 * send a `basic.nack` or `basic.reject` to reject and delete a message
 * reject a message with `requeue=true` to redeliver it
+
+---
+
+## Message flow diagram
+
+![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
 
 ---
 
@@ -242,6 +355,12 @@ Nevertheless the same tool might expect to always be immediately informed about 
 When a redundant cluster is available, using _HA queues_ with _delivery confirmation_ and _dead-letter exchanges_ is a secure choice.
 
 As money transfers need all possible guarantees, you will want to add _persistence of messages to disk_ into the mix. This ensures all messages can be recovered even in the case of catastrophic failure.
+
+---
+
+## Message flow diagram
+
+![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
 
 ---
 
@@ -334,6 +453,12 @@ When a queued message expires or is rejected by the consumer.
 
 ---
 
+## Message flow diagram
+
+![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
+
+---
+
 ## Routing examples
 
 In a **fanout exchange** all queues will receive all messages. This burdens the consumers of this queues with handling differnt kind of messages.
@@ -391,7 +516,9 @@ Messages can be delivered to multiple queues that can have one or more consumers
 | `#.job`                | matches all messages about Jobs            |
 | `#`                    | all messages                               |
 
-### Message flow diagram
+---
+
+## Message flow diagram
 
 ![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
 
