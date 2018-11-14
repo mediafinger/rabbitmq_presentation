@@ -96,6 +96,18 @@ For most other cases RabbitMQ might be the better choice.
 
 ![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
 
++++
+### Explanation
+
+* messages are published to exchanges and include a routing_key
+* the broker routes the messages from an exchange to the queues
+* one message can be routed to multiple queues
+* the broker pushes message from queues to consumers
+* a queue can have multiple consumers to improve performance
+* load balancing is done via round robbin without overloading consumers
+* consuming multiple queues can be done to aggregate data
+* every publisher can also be a consumer
+
 ---
 
 ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/wat_bunny-leximphoto-427130-unsplash.jpg)
@@ -127,7 +139,7 @@ For most other cases RabbitMQ might be the better choice.
 * Load Balancing
   * multiple consumers
 * Resilient services
-  * keep messages queued, rerun later
+  * re-queued messages, deliver later
 
 +++
 ### Service Discovery / Service Registry
