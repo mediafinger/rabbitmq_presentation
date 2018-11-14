@@ -102,7 +102,7 @@ For most other cases RabbitMQ might be the better choice.
 
 ---
 
-## (Micro) service oriented architecture
+## (Micro) service oriented architecture (TODO)
 
 * extract services from a monolith
 * add one or more services
@@ -117,9 +117,8 @@ For most other cases RabbitMQ might be the better choice.
 * Load Balancing
 * Resilient services
 
----
-
-## How RabbitMQ can help solve those challenges
++++
+### How RabbitMQ can help solve those challenges
 
 * Service Discovery / Service Registry
   * services register with the broker
