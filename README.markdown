@@ -79,11 +79,17 @@ When you want event sourcing and replayability, use Kafka.
 
 For most other cases RabbitMQ might be the better choice.
 
+### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/costume_head_rabbit-steve-harvey-551603-unsplash.jpg)
+
 ---
 
 ## Message flow diagram
 
 ![Simplified message flow diagram](https://raw.githubusercontent.com/mediafinger/rabbitmq_info/master/assets/message_flow_broker.png)
+
+---
+
+![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/wat_bunny-leximphoto-427130-unsplash.jpg)
 
 ---
 
@@ -105,11 +111,14 @@ For most other cases RabbitMQ might be the better choice.
 
 ## How RabbitMQ can help solve those challenges
 
-* Service Discovery / Service Registry --> services register with the broker
-* Communication between services --> decoupling over queues
-* Load Balancing --> multiple consumers
-* Resilient services --> keep messages queued, rerun later
-
+* Service Discovery / Service Registry
+  * services register with the broker
+* Communication between services
+  * decoupling over queues
+* Load Balancing
+  * multiple consumers
+* Resilient services
+  * keep messages queued, rerun later
 
 ### Service Discovery / Service Registry
 
@@ -146,6 +155,9 @@ With RabbitMQ:
 * Message brokers use queues where timeouts are less of an issue
 * retry logic can be individualized for every queue or even for every message type
 * when the other failing service is available again, messages in queues can be delivered as if nothing happened
+
+### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/pink_bunny-freephotos_cc.jpg)
+
 
 ### Background Jobs
 
@@ -200,7 +212,7 @@ Using RabbitMQ as the central broker between your services
 * simplifies architecture, only your services and a message broker
 * simplifies setup - don't need to maintain many different tools
 
-#### Advantages
+### Advantages
 
 Starting fast with a service based architecture, while avoiding:
 * complexity
@@ -210,13 +222,18 @@ Starting fast with a service based architecture, while avoiding:
 * high latency
 * pain in general
 
-#### Disadvantage
+### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/hero_bunnies-freephotos-cc.jpg)
+
+### Disadvantage
 
 * single point of failure  
   > Though I bet most (m)SOA have multiple points of failures  
   >ヽ༼ ಠ益ಠ ༽ﾉ
 * growing systems will adapt more complex tooling eventually
 
+---
+
+![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/jumping_rabbit-vincent-van-zalinge-390716-unsplash.jpg)
 
 ---
 
@@ -423,9 +440,7 @@ As money transfers need all possible guarantees, you will want to add _persisten
 RabbitMQ provides other types of exchanges through plugins to enable special use cases. For example the _consistent-hashing_® exchange to load-balance the number of messages sent to queues in a cluster.
 
 
-### Handling failure
-
-TODO:
+### Handling failure (TODO)
 
 * retries and final failure
 * dead-letter boxes and poisonous messages https://derickbailey.com/2016/03/28/dealing-with-dead-letters-and-poison-messages-in-rabbitmq/
@@ -744,6 +759,12 @@ channel.close
 
 ---
 
+![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/kangoroo-ivan-lojko-53308-unsplash.jpg)
+
+  _It's a kangaroo!_
+
+---
+
 ## Clients
 
 To comfortably use **AMQP** with the RabbitMQ extensions, there are clients for basically all modern languages.
@@ -815,9 +836,15 @@ https://github.com/Antti/rust-amqp
 
 ---
 
-## Thanks for reading!
+![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/costume_back_rabbit-freephotos_cc.jpg)
 
-Created by [**Andreas Finger**](http://mediafinger.com) in November 2018 in Barcelona
+  _I've gotta go_
+
+---
+
+## Thanks for your attention!
+
+Created by [**Andreas Finger**](http://mediafinger.com) throughout 2018 in Barcelona
 
 [@mediafinger on Github](https://github.com/mediafinger)
 
