@@ -145,7 +145,7 @@ For most other message broker use cases RabbitMQ might be the better choice.
 * a queue can have multiple consumers to improve performance
   * load balancing is done via round robbin without overloading consumers
 * consuming multiple queues can be done to aggregate data
-* every publisher can also be a consumer
+* **every publisher can also be a consumer**
 
 ---
 
