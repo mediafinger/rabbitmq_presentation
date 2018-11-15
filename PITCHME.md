@@ -67,6 +67,9 @@ The architecture described here is called **event-driven**
 * event-sourcing describes similar functionality, but stores all events
 * event-driven contrasts with synchronous, blocking requests
 
++++
+### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/headphones_bunny-john-forson-1145701-unsplash.jpg)
+
 ---
 
 ## RabbitMQ
