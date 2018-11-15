@@ -22,14 +22,50 @@ _I promised cute bunnies!_
 
 ---
 
-## Message Broker
+## Message broker
 
-Explain
-* messages systems in general
-* pub / sub
-* message broker
-* background workers are a subset of messaging systems and come included
-* events
+Message brokers are central services that **route** messages between senders (publishers) and receivers (consumers)
+
+* brokers understand **multiple protocols** and translate between them
+* brokers provide security layers
+* brokers **aggregate** messages
+* brokers **replicate** messages
+* brokers support different ways of sending messages like **pub/sub**, **queues** and mixtures of both
+* brokers often support remote procedure calls (RPC) a request-response protocol
+
++++
+### pub / sub
+
+The **pub**lish / **sub**scribe model **decouples** publishers and subscribers
+
+* no more polling (and no callbacks or webhooks) needed
+* **publishers send** messages to channels without knowing who will receive those messages
+* **subscribers listen** to channels without knowing who sends messages
+* one message can be delivered to multiple subscribers (broadcasting / fan-out)
+* this allows for great scalability like RSS and Atom demonstrate
+
++++
+### Message queues
+
+Queues are an **asynchronous** point-to-point communication system
+
+* queues can be filled by many publishers
+* queues have typically only one consumer
+* as soon as a message has been consumed, it will be deleted from the queue
+* message queues can be configured to ensure each message is processed
+* the order of the messages is not guaranteed
+* background workers rely on queues, they are a subset of messaging systems
+
++++
+### Event-driven
+
+The architecture described here is called **event-driven**
+
+* when a change happens, an event is fired (a message is send)
+* other services can react to this event
+* once an event is processed, it will be deleted
+* event-sourcing describes similar functionality, but stores all events
+* event-driven contrasts with synchronous, blocking requests
 
 ---
 
@@ -79,13 +115,13 @@ While this how-to focuses on RabbitMQ's AMQP implementation only, RabbitMQ also 
 ### Alternative (?) Kafka
 
 * Kafka is a different tool
-* specialized on event sourcing
+* specialized on event-sourcing (storing all events)
 * less flexible
 * very high throughput (100k/sec)
 
-When you want event sourcing and replayability, use Kafka.
+When you need event sourcing and replayability, use Kafka.
 
-For most other cases RabbitMQ might be the better choice.
+For most other message broker use cases RabbitMQ might be the better choice.
 
 +++
 ### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/costume_head_rabbit-steve-harvey-551603-unsplash.jpg)
