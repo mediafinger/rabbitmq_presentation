@@ -98,7 +98,7 @@ While this how-to focuses on RabbitMQ's AMQP implementation only, RabbitMQ also 
 
 ### Where RabbitMQ shines
 
-* very flexible in controlling trade-offs between reliable message throughput and performance
+* **very flexible in controlling trade-offs** between reliable message throughput and performance
 * plugins to extend core-functionality
 * it is fast: 20k+/sec messages can be handled on a _single queue_
 * clustering for redundancy is simple to setup
@@ -129,7 +129,7 @@ For most other message broker use cases RabbitMQ might be the better choice.
 * one message can be routed to multiple queues
 * the broker pushes message from queues to consumers
 * a queue can have multiple consumers to improve performance
-* load balancing is done via round robbin without overloading consumers
+  * load balancing is done via round robbin without overloading consumers
 * consuming multiple queues can be done to aggregate data
 * every publisher can also be a consumer
 
@@ -166,7 +166,7 @@ For most other message broker use cases RabbitMQ might be the better choice.
 
 ### Service Discovery / Service Registry
 
-Typical solution: Consul from HashiCorp or Zookeeper from Apache
+_Typical solution: Consul from HashiCorp or Zookeeper from Apache_
 
 With RabbitMQ:
 * services register with the broker
@@ -176,7 +176,7 @@ With RabbitMQ:
 
 ### Communication between services
 
-Typical solution: synchronous REST API
+_Typical solution: synchronous REST API_
 
 With RabbitMQ:
 * services publish and consume messages
@@ -185,7 +185,7 @@ With RabbitMQ:
 
 ### Load Balancing
 
-Typical solution: configure a software or hardware load-balancer. (Spoiler: it's tricky!)
+_Typical solution: configure a software or hardware load-balancer. (Spoiler: it's tricky!)_
 
 With RabbitMQ:
 * asynchronous handling to soften spikes: messages can stay in queue till consumed
@@ -193,7 +193,7 @@ With RabbitMQ:
 
 ### Resilient services
 
-Typical solution: a few retries and then error logging. When thousands of calls fail, your system might lose important data. Hard to recover / rerun later.
+_Typical solution: a few retries and then error logging. When thousands of calls fail, your system might lose important data. Hard to recover / rerun later._
 
 With RabbitMQ:
 * Message brokers use queues where timeouts are less of an issue
@@ -271,7 +271,8 @@ Starting fast with a service based architecture, while avoiding:
 ### Disadvantage
 
 * single point of failure  
-  > Though I bet most (m)SOA have multiple points of failures  
+  > I bet most (m)SOA have multiple points of failures  
+  >  
   >ヽ༼ ಠ益ಠ ༽ﾉ
 * growing systems will adapt more complex tooling eventually
 
