@@ -139,12 +139,13 @@ For most other message broker use cases RabbitMQ might be the better choice.
 
 ---
 
-## (Micro) service oriented architecture (TODO)
+## (Micro) service oriented architecture
 
-* extract services from a monolith
-* add one or more services
-* convert to service oriented architecture (SOA)
-* create a microservice setup
+When you **extract services from a monolith**
+
+or start with a **microservice** setup
+
+you have to solve some new challenges. These are intensified by the use of VMs and containers.
 
 ### Challenges of SOA
 
@@ -152,17 +153,6 @@ For most other message broker use cases RabbitMQ might be the better choice.
 * Communication between services
 * Load Balancing
 * Resilient services
-
-### How RabbitMQ can help solve those challenges
-
-* Service Discovery / Service Registry
-  * services register with the broker
-* Communication between services
-  * decoupling over queues
-* Load Balancing
-  * multiple consumers
-* Resilient services
-  * re-queued messages, deliver later
 
 ### Service Discovery / Service Registry
 
@@ -196,9 +186,21 @@ With RabbitMQ:
 _Typical solution: a few retries and then error logging. When thousands of calls fail, your system might lose important data. Hard to recover / rerun later._
 
 With RabbitMQ:
+* pub / sub decouples the services
 * Message brokers use queues where timeouts are less of an issue
 * retry logic can be individualized for every queue or even for every message type
 * when the other failing service is available again, messages in queues can be delivered as if nothing happened
+
+### How RabbitMQ can help solve those challenges
+
+* Service Discovery / Service Registry
+  * services register with the broker
+* Communication between services
+  * decoupling over queues
+* Load Balancing
+  * multiple consumers
+* Resilient services
+  * re-queued messages, deliver later
 
 ### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/pink_bunny-freephotos_cc.jpg)
 
@@ -226,7 +228,7 @@ In many service oriented architecture, the system triggering an event (or receiv
 
 Doing this in a resilient way, involves usually background workers in each application that handles asynchronous processing and retries.
 
-Using a message bus means to inform other systems about events and those implement the logic if and how to react.
+_Using a message broker architecture means to inform other systems about events and those implement the logic if and how to react._
 
 ### Scale and extend systems
 
@@ -234,19 +236,21 @@ Decoupling services by introducing an asynchronous messaging system between them
 
 Adding additional consumers in peak times is as simple as spinning up a new instance.
 
-Extending the system by adding new services to it can be done independently
+_Extending the system by adding new services can be done independently._
 
 ### Handling high volumes of messages
 
 The message broker distributes messages and can in this process throttle the load towards the message receiving systems.
 
-This can reduce failure rate in peak times and at the same time speed up the systems sending messages, as they are no longer blocked by waiting for an answer of a potentially slow system. This can go as far as decoupling your database writes.
+_This can reduce failure rate in peak times and at the same time speed up the systems sending messages, as they are no longer blocked by waiting for an answer of a potentially slow system._  
+_This can go as far as decoupling your database writes._
 
 ### Broadcasting and replicating messages
 
 The message broker can inform multiple systems about changes and events. This allows to add new functionality seamlessly.
 
-It can replicate data and events to data centers in other regions to achieve high availability. This raises the guarantees of message delivery and better performing front end apps for customers around the globe.
+_It can replicate data and events to data centers in other regions to achieve high availability._  
+_This raises the guarantees of message delivery and better performing front end apps for customers around the globe._
 
 ---
 
@@ -270,11 +274,11 @@ Starting fast with a service based architecture, while avoiding:
 
 ### Disadvantage
 
-* single point of failure  
-  > I bet most (m)SOA have multiple points of failures  
+* single point of failure
+
+  > I bet most SOA have multiple points of failures  
   >  
   >ヽ༼ ಠ益ಠ ༽ﾉ
-* growing systems will adapt more complex tooling eventually
 
 ---
 
