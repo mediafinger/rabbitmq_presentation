@@ -1,5 +1,7 @@
 # A simpler (micro) service setup with RabbitMQ
 
+Andreas Finger :: @mediafinger
+
 ### Overview
 
 How a message broker architecture will get you up to _speed_ with (micro) services.
