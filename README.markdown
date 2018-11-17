@@ -36,10 +36,10 @@ Message brokers are central services that **route** messages between senders (pu
 
 The **pub**lish / **sub**scribe model **decouples** publishers and subscribers
 
-* no more polling (and no callbacks or webhooks) needed
 * **publishers send** messages to channels without knowing who will receive those messages
 * **subscribers listen** to channels without knowing who sends messages
-* one message can be delivered to multiple subscribers (broadcasting / fan-out)
+* no more polling (and no callbacks or webhooks) needed
+* one message can be delivered to **multiple subscribers** (broadcasting / fan-out)
 * this allows for great scalability like RSS and Atom demonstrate
 
 ### Message queues
@@ -47,10 +47,10 @@ The **pub**lish / **sub**scribe model **decouples** publishers and subscribers
 Queues are an **asynchronous** point-to-point communication system
 
 * queues can be filled by many publishers
-* queues have typically only one consumer
-* as soon as a message has been consumed, it will be deleted from the queue
-* message queues can be configured to ensure each message is processed
-* the order of the messages is not guaranteed
+* queues have typically only **one consumer**
+* when a message was consumed, it will be deleted
+* message queues can ensure each message is processed
+* **the order of the messages is not guaranteed**
 * background workers rely on queues, they are a subset of messaging systems
 
 ### Event-driven
@@ -61,7 +61,8 @@ The architecture described here is called **event-driven**
 * other services can react to this event
 * once an event is processed, it will be deleted
 * event-sourcing describes similar functionality, but stores all events
-* event-driven contrasts with synchronous, blocking requests
+
+Event-driven contrasts with synchronous, blocking requests
 
 ### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/headphones_bunny-john-forson-1145701-unsplash.jpg)
 
@@ -73,7 +74,7 @@ RabbitMQ is a high performance **message broker** based on AMQP.
 
 Using the broker architecture it can be scaled independently.
 
-Applications interact with it over lightweight client libraries.
+Applications interact with RabbitMQ over lightweight client libraries.
 
 ### AMQP
 
@@ -198,11 +199,11 @@ With RabbitMQ:
 * Service Discovery / Service Registry
   * services register with the broker
 * Communication between services
-  * decoupling over queues
+  * decoupled over asynchronous queues
 * Load Balancing
   * multiple consumers
 * Resilient services
-  * re-queued messages, deliver later
+  * decoupling, re-queue messages, deliver later
 
 ### ![Cute Bunny](https://raw.githubusercontent.com/mediafinger/rabbitmq_presentation/master/assets/bunnies/pink_bunny-freephotos_cc.jpg)
 
