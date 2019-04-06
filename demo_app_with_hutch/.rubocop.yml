@@ -1,7 +1,7 @@
 require: rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.6
   DisplayCopNames: true
   Exclude:
       - config.ru
@@ -25,7 +25,7 @@ Metrics/AbcSize:
 
 Metrics/BlockLength:
   Exclude:
-    - config.rb
+    - settings.rb
     - spec/**/*
 
 Metrics/ClassLength:
@@ -99,8 +99,13 @@ Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
   Enabled: false
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma
+  Enabled: true
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+  Enabled: true
 
 Style/WordArray:
   EnforcedStyle: percent
