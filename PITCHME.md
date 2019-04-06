@@ -908,7 +908,7 @@ Instead of using bunny directly, you could implement a **framework** like:
 * hutch: https://github.com/gocardless/hutch
 * sneakers: https://github.com/jondot/sneakers/wiki
 
-_Example code:_ https://github.com/mediafinger/rabbitmq_presentation/tree/master/hutch_consumer
+_Example code:_ https://github.com/mediafinger/rabbitmq_presentation/tree/master/demo_app_with_hutch
 
 +++
 ### Perl
