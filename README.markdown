@@ -639,12 +639,15 @@ To try those examples you'll need a running RabbitMQ broker. The examples are wr
 
 http://localhost:15672/ (user: guest, password: guest)
 
-Instead of using bunny directly, you could chose to implement a **framework** like:
+### Use a framework
+
+Instead of using bunny directly, I would recommend to use a **framework** like:
 
 * hutch: https://github.com/gocardless/hutch
 * sneakers: https://github.com/jondot/sneakers/wiki
 
-But those are not covered in here.
+This repo includes a demo app (in Ruby) with detailed setup instructions:  
+https://github.com/mediafinger/rabbitmq_presentation/tree/master/demo_app_with_hutch
 
 ### Setting up a topic exchange and binding queues to it
 
@@ -896,7 +899,7 @@ https://github.com/Antti/rust-amqp
 
 ## Thanks for your attention!
 
-Created by [**Andreas Finger**](http://mediafinger.com) throughout 2018 in Barcelona
+Created by [**Andreas Finger**](http://mediafinger.com) 2018 & 2019 in Barcelona
 
 [@mediafinger on Github](https://github.com/mediafinger)
 
