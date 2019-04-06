@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "../config.rb"
+require_relative "../settings.rb"
 
-RSpec.describe Config do
+RSpec.describe Settings do
   before do
     described_class.register :some_test_rack_env,    default: ENV["RACK_ENV"] || "development"
     described_class.register :some_test_root,        default: __dir__
@@ -18,11 +18,11 @@ RSpec.describe Config do
 
   it "tests some current setup values", :aggregate_failures do
     expect(described_class.some_test_rack_env).to    eq("test")
-    expect(described_class.some_test_root).to        match %r{.+/hutch_publisher/spec}
+    expect(described_class.some_test_root).to        match %r{.+/demo_app_with_hutch/spec}
     expect(described_class.some_test_url).to         eq("amqp://guest:guest@localhost:5672/%2F")
 
     expect(described_class.some_test_default).to     eq("development")
-    expect(described_class.some_test_bootup_time).to be_an_instance_of(Time)
+    expect(described_class.some_test_bootup_time).to be_within(60).of(Time.now)
     expect(described_class.some_test_false).to       eq(false)
     expect(described_class.some_test_true).to        eq(true)
     expect(described_class.some_test_number).to      eq(5)

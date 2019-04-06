@@ -1,8 +1,8 @@
 #!/usr/bin/env puma
 # frozen_string_literal: true
 
-require_relative "config.rb" unless defined? Config
-directory Config.root
+require_relative "settings.rb" unless defined? Settings
+directory Settings.root
 
 # Set the environment in which the rack's app will run. The value must be a string. Default is "development"
 # environment "production"

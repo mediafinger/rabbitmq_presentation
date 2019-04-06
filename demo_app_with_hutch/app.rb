@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "config.rb" unless defined? Config
+require_relative "settings.rb" unless defined? Settings
 
 require "sinatra"
 require "haml"
@@ -18,7 +18,7 @@ end
 
 class App < Sinatra::Application
   configure do
-    set :root,          Config.root
+    set :root,          Settings.root
     set :server,        :puma
   end
 

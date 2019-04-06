@@ -5,8 +5,8 @@ require "rspec/core"
 require "rspec/core/rake_task"
 require "rubocop"
 
-# require_relative "config.rb" unless defined? Config
-# require File.join(Config.root, "app")
+require_relative "settings.rb" unless defined? Settings
+require File.join(Settings.root, "app")
 
 task :environment do
   ENV["RACK_ENV"] ||= "development"
