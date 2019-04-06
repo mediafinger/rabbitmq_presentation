@@ -8,6 +8,7 @@ require "rubocop"
 require_relative "settings.rb" unless defined? Settings
 require File.join(Settings.root, "app")
 
+desc "Sets the RACK_ENV variable"
 task :environment do
   ENV["RACK_ENV"] ||= "development"
 end
@@ -21,12 +22,16 @@ task console: :environment do
   require_relative "app.rb"
   IRB.start
 end
+
+desc "Alias for console"
 task publisher: :console
 
 desc "Starts the hutch process to create and consume the queues"
 task hutch: :environment do
   sh "bundle exec hutch --require hutch_consumer_config.rb"
 end
+
+desc "Alias for hutch"
 task consumer: :hutch
 
 desc "Prints the routes of the app in a human readable form"
@@ -41,30 +46,31 @@ end
 # define task :rspec
 RSpec::Core::RakeTask.new(:rspec)
 
-desc "Run rubocop with autocorrect"
+desc "Run rubocop"
 task rubocop: :environment do
-  puts "Obey the autocorrection cop!"
-  sh "rubocop  -a -c .rubocop.yml"
+  sh "rubocop -c .rubocop.yml"
 end
 
-namespace :rubocop do
-  desc "Run rubocop without autocorrect"
-  task not_correcting: :environment do
-    sh "rubocop -c .rubocop.yml"
-  end
+desc "Run rubocop with autocorrect"
+task rubocopa: :environment do
+  puts "Obey the autocorrection cop!"
+  sh "rubocop  -a -c .rubocop.yml"
 end
 
 desc "Run rubocop and the specs"
 task :test do
   ENV["RACK_ENV"] = "test"
-  Rake::Task["rubocop:not_correcting"].invoke
+  Rake::Task["rubocop"].invoke
   Rake::Task["rspec"].invoke
 end
 
 desc "Run the web app (the publisher), start sinatra server"
-task start: :environment do
+task server: :environment do
   sh " puma -t 0:8 -p 4500 --tag CONSUMER -C puma.rb"
 end
-task sinatra: :start
 
+desc "Alias for server"
+task sinatra: :server
+
+desc "Default task runs test"
 task default: :test
