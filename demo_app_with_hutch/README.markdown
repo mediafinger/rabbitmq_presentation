@@ -28,9 +28,13 @@ Open the management **WebUI** in the browser and log in as **guest / guest**
 * `bundle install` the gems
 * `rake hutch` to create queues and start consumers
 
-> You can check, handle and add messages to the queue in the RabbitMQ's WebUI
+To publish either start the UI with `rake server` or start `rake console` (which loads _app.rb_) and send a message like this:
 
-To publish open: `bundle exec rake console` which loads _app.rb_
+    publish(routing_key: "barcelona.ruby.event", message: { message: "A man, a plan, a canal panama!"})
+
+Then open RabbitMQ's management WebUI to check that a message was sent.
+
+> You can also handle messages and add new messages to the queues in RabbitMQ's WebUI at http://localhost:15672/
 
 ### Consumer setup
 
@@ -46,34 +50,52 @@ Check _hutch_shared_config.rb_ which has to be the same for all publishers and a
 
 ## Rake Tasks
 
+### hutch / consumer
+
     rake hutch
 
-Runs `hutch --require hutch_consumer_config.rb`. Without this there won't be any queues defined! Consumers only start consuming after hutch is started **(the consumer)**. Start this first and then either `rake console` or `rake start`. Alias: `rake consumer`
+Runs `hutch --require hutch_consumer_config.rb`. Without this there won't be any queues defined! Consumers only start consuming after hutch is started **(a consumer)**. Start this first and then either `rake console` or `rake server`.  
+_Alias:_ `rake consumer`
+
+### console / publisher
 
     rake console
 
-Opens IRB with `awesome_print` and the application loaded **(the publisher)**. Alias: `rake publisher`
+Opens IRB with `awesome_print` and the application loaded **(a publisher)**.  
+_Alias:_ `rake publisher`
 
+### server / sinatra
+
+    rake server
+
+Starts puma and loads the sinatra app **(a publisher)**. Open http://0.0.0.0:4500/  
+_Alias:_ `rake sinatra`
+
+### routes
     rake routes
 
 Prints the routes in human readable form.
+
+### rspec
 
     rake rspec
 
 Executes the specs.
 
+### rubocop
+
     rake rubocop
 
-Runs `rubocop --auo-correct`.
+Runs `rubocop`
 
-    rake rubocop:not_correcting
+### rubocopa
 
-Runs `rubocop` without autocorrect
+    rake rubocopa
 
-    rake start
+Runs `rubocop --auto-correct`.
 
-Starts puma and loads the sinatra app **(the publisher)**. Alias: `rake sinatra`
+### test
 
     rake test
 
-Runs `rake rubocop:not_correcting` and `rake rspec`. This is the default task.
+Runs the tasks `rubocop` and `rspec`. This is the _default_ task.
