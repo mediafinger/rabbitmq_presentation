@@ -19,7 +19,7 @@ GEM
     parser (2.5.3.0)
       ast (~> 2.4.0)
     powerpack (0.1.1)
-    puma (3.11.2)
+    puma (3.12.4)
     rack (2.0.6)
     rack-protection (2.0.4)
       rack
@@ -68,7 +68,7 @@ DEPENDENCIES
   bunny (~> 2.9)
   haml (~> 5.0)
   json_spec (~> 1.1)
-  puma (~> 3.7)
+  puma (~> 3.12)
   rake (~> 12.3)
   rspec (~> 3.7)
   rubocop (= 0.52.1)

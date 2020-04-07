@@ -6,7 +6,7 @@ gem "sinatra", "> 2.0.2"
 
 gem "bunny", "~> 2.9"
 gem "haml",  "~> 5.0"
-gem "puma",  "~> 3.7"
+gem "puma",  "~> 3.12"
 gem "rake",  "~> 12.3"
 
 group :development, :test do
