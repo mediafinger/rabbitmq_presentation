@@ -4,4 +4,4 @@ ENV["RACK_ENV"] ||= "test"
 
 require_relative "../settings.rb" unless defined? Settings
 
-require File.expand_path("#{Settings.root}/app.rb", __FILE__)
+require File.expand_path("#{Settings.root}/app.rb", __FILE__) # load "server.rb" when you need the rack endpoints

@@ -34,11 +34,11 @@ end
 desc "Alias for hutch"
 task consumer: :hutch
 
-desc "Prints the routes of the app in a human readable form"
+desc "Prints the routes of the sinatra server in a human readable form"
 task routes: :environment do
   actions = %w(GET POST PUT PATCH DELETE)
   routes = actions.each_with_object({}) do |action, hash|
-    hash[action] = App.routes[action]&.each_with_object([]) { |route, arr| arr << route[0].to_s }
+    hash[action] = Server.routes[action]&.each_with_object([]) { |route, arr| arr << route[0].to_s }
   end
   ap routes.compact
 end
@@ -64,7 +64,7 @@ task :test do
   Rake::Task["rspec"].invoke
 end
 
-desc "Run the web app (the publisher), start sinatra server"
+desc "Run the server (the publisher), start sinatra server"
 task server: :environment do
   sh " puma -t 0:8 -p 4500 --tag CONSUMER -C puma.rb"
 end

@@ -68,7 +68,7 @@ _Alias:_ `rake publisher`
 
     rake server
 
-Starts puma and loads the sinatra app **(a publisher)**. Open http://0.0.0.0:4500/  
+Starts puma and loads the sinatra server **(a publisher)**. Open http://0.0.0.0:4500/  
 _Alias:_ `rake sinatra`
 
 ### routes
