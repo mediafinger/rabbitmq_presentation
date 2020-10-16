@@ -1,7 +1,7 @@
 require: rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
   DisplayCopNames: true
   Exclude:
       - config.ru
@@ -13,38 +13,18 @@ Lint/AmbiguousBlockAssociation:
 Layout/EmptyLineAfterMagicComment:
   Enabled: true
 
-Layout/IndentHash:
+Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
+
+Layout/LineLength:
+  Max: 125
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
   IndentationWidth: 2
 
-Metrics/AbcSize:
+Metrics:
   Enabled: false
-
-Metrics/BlockLength:
-  Exclude:
-    - settings.rb
-    - spec/**/*
-
-Metrics/ClassLength:
-  Max: 120
-
-Metrics/CyclomaticComplexity:
-  Max: 10
-
-Metrics/LineLength:
-  Max: 125
-
-Metrics/MethodLength:
-  Max: 20
-
-Metrics/ParameterLists:
-  Max: 7
-
-Metrics/PerceivedComplexity:
-  Max: 8
 
 RSpec/AlignLeftLetBrace:
   Enabled: true
@@ -59,9 +39,6 @@ RSpec/ExampleLength:
 
 RSpec/NamedSubject:
   Enabled: true
-
-Style/BracesAroundHashParameters:
-  Enabled: false
 
 Style/Documentation:
   Enabled: false
