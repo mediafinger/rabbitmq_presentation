@@ -25,7 +25,7 @@ GEM
     multi_json (1.13.1)
     rake (12.3.0)
     thread_safe (0.3.6)
-    tzinfo (1.2.5)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
 
 PLATFORMS
